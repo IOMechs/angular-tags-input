@@ -1,0 +1,18 @@
+
+<ng-container
+ *ngTemplateOutlet="dropDownTemplate; context: context">
+</ng-container>
+
+<!-- Default Tag Options Template -->
+<ng-template #defaultTagOptionTemplate let-items="items" let-config="config">
+  <div class="angular-tags-dropdown">
+    <div class="angular-tags-dropdown__list">
+      <div
+        class="angular-tags-dropdown__list__item"
+        (click)="onItemClicked(item)"
+        *ngFor="let item of items">
+        {{item[config.displayProperty]}}
+      </div>
+    </div>
+  </div>
+</ng-template>

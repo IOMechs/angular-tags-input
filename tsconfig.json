@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-tags-input": [
+        "dist/angular-tags-input"
+      ],
+      "angular-tags-input/*": [
+        "dist/angular-tags-input/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

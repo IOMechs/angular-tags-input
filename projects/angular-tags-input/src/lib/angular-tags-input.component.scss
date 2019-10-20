@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+.angular-tags-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: -3px 0;
+  &__inp-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: white;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+    position: relative;
+    top: 4px;
+    &__tag-input {
+      flex: 1;
+      margin-bottom: 8px;
+    }
+
+    &__tag {
+      margin: 0 10px 8px 0;
+    }
+  }
+
+  &__dd-container {
+    display: block;
+    width: 100%;
+  }
+}

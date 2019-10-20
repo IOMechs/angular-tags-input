@@ -1,0 +1,13 @@
+<div class="angular-tag-input {{inputClass}}">
+  <form no-validate [formGroup]="tagInputForm">
+    <input
+      #inputEl
+      (keyup.enter)="onEnterKeyPress()"
+      [placeholder]="config?.placeholder"
+      formControlName="tagInputVal"
+      (focus)="emitInputFocused()"
+      (blur)="inputBlurred.emit()"
+      class="angular-tag-input__input"
+      autocomplete="off">
+  </form>
+</div>

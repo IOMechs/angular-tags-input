@@ -1,0 +1,36 @@
+.angular-tag {
+  display: flex;
+  align-items: center;
+  &__text {
+    margin-right: 10px;
+    flex: 1;
+    .default-tag & {
+      color: white;
+    }
+  }
+
+  &__close-btn {
+    cursor: pointer;
+
+    .default-tag & {
+      padding-left: 0;
+      padding-right: 0;
+      background: transparent;
+      border: none;
+      color: white;
+      &:hover {
+        color: #dcdcdc;
+      }
+    }
+  }
+
+  &.default-tag {
+    background: #777;
+    padding: 6px 10px;
+    transition: all ease 0.5s;
+
+    &:hover {
+      background: #333;
+    }
+  }
+}

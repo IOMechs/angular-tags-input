@@ -1,0 +1,40 @@
+<div class="angular-tags-input {{config.defaultClass}} {{config.additionalClasses}}">
+  <div class="angular-tags-input__inp-container">
+    <ng-container *ngIf="!config.hideTags">
+      <ti-tag
+        class="angular-tags-input__inp-container__tag"
+        *ngFor="let tagItem of tags"
+        [config]="config"
+        [tagItem]="tagItem"
+        [tagItemTemplate]="tagItemTemplate"
+        (closeClicked)="tagCloseClicked($event)">
+      </ti-tag>
+    </ng-container>
+    <ti-tag-input
+      [style.display]="config.hideInputOnSelection && tags.length ? 'none' : 'block'"
+      cdkOverlayOrigin
+      #dropdownTrigger="cdkOverlayOrigin"
+      [config]="config"
+      class="angular-tags-input__inp-container__tag-input"
+      (tagEntered)="addTag($event)"
+      (valueChanged)="valueChanged.emit($event)"
+      (inputFocused)="onInputFocus()"
+      (inputBlurred)="onFocusChange(false);">
+    </ti-tag-input>
+  </div>
+  <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="dropdownTrigger" [cdkConnectedOverlayOpen]="isDropdownOpen"
+    [cdkConnectedOverlayHasBackdrop]="true" (backdropClick)="hideDropdown()"
+    cdkConnectedOverlayPanelClass="angular-tags-input-dd-overlay{{config.dropdownClass}}"
+    [cdkConnectedOverlayScrollStrategy]="ddScrollStrategy"
+    [cdkConnectedOverlayPositions]="dropdownOverlayPosition">
+    <div class="angular-tags-input__dd-container">
+      <ti-dropdown
+        (itemClicked)="onItemClicked($event);"
+        [dropDownTemplate]="dropDownTemplate"
+        [listItems]="tagsData | unAddedTags: {tagsAdded: tags, config: config}"
+        [config]="config"
+        (itemAdded)="addTag($event);">
+      </ti-dropdown>
+    </div>
+  </ng-template>
+</div>
