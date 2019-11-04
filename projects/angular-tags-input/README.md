@@ -29,3 +29,11 @@ import { AngularTagsInputModule } from '@iomechs/angular-tags-input';
 });
 ```
 
+Then in your HTML, you can use as:
+```html
+  <ti-angular-tags-input
+    formControlName="locations" [tagsData]="(data$ | async)"
+    (valueChanged)="onTagInputValueChange($event)"
+    [config]="tagsInputConfig">
+  </ti-angular-tags-input>
+```
