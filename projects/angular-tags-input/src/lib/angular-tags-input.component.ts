@@ -266,6 +266,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         this.selectRelatedTags(tag);
       } else {  // if the tag is already selected, remove
         this.removeTag(tag);
+        this.tagRemoved.emit(tag);
         this.removeTagSelection(tag);
       }
     } else {
@@ -327,6 +328,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - the tag to remove
    */
   tagCloseClicked(tag) {
+    this.tagRemoved.emit(tag);
     this.removeTag(tag);
     this.removeTagSelection(tag);
   }
