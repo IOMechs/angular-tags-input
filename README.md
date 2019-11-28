@@ -1,27 +1,39 @@
-# AngularTagsInputWs
+# AngularTagsInput (@iomechs/angular-tags-input)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
+A simple tags input library for Angular. Supports nested elements and a lot of flexibility to the developers. (README to be updated)
 
-## Development server
+## Usage
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install the package in your project's folder by using npm or yarn:
+```bash
+npm install @iomechs/angular-tags-input --save
+# OR
+yarn add @iomechs/angular-tags-input -S
+```
 
-## Code scaffolding
+Import AngularTagsInputModule in your AppModule as below:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```typescript
+import { AngularTagsInputModule } from '@iomechs/angular-tags-input';
 
-## Build
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AngularTagsInputModule, // <-- here
+  ]
+});
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Then in your HTML, you can use as:
+```html
+  <ti-angular-tags-input
+    formControlName="locations" [tagsData]="(data$ | async)"
+    (valueChanged)="onTagInputValueChange($event)"
+    [config]="tagsInputConfig">
+  </ti-angular-tags-input>
+```
