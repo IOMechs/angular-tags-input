@@ -5,6 +5,7 @@ export interface AngularTagsInputConfig {
   displayProperty?: string;
   identifier?: string;
   onlyFromAutoComplete?: boolean;
+  childrenCountProperty?: string;
   hideAddedTags?: boolean;
   nestedTagProperty?: string;
   showTagsSelectedInDD?: boolean;
