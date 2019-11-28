@@ -54,7 +54,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     maxItems: null,
     nestedTagParentProp: ''
   };
-  onChange: Function;
+  onChange: (items: AngularTagItem[]) => void;
   inputDisabled: boolean;
   dropdownOverlayPosition = [
     { offsetY: 28, originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
@@ -204,8 +204,8 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   }
 
   ngAfterViewInit() {
-    if (!this.onChange) {
-      throw new Error('Please use ngModel or FormControlName with <ti-angular-tags-input>');
+    if (!!this.config && !this.onChange) {
+      console.warn('Please use ngModel or FormControlName with <ti-angular-tags-input>');
     }
     if (this.config.nestedTagProperty) {
       // we need the parent property to be able to unselect the parent when a child tag is unselected
@@ -364,7 +364,13 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         // tslint:disable-next-line:triple-equals
         return tagItem[this.config.nestedTagParentProp] == parentTag[this.config.identifier];
       }).length;
-      if (parentTagChildren > 0 && childrensSelected > 0 && childrensSelected === parentTagChildren) {
+      if (
+        ( parentTagChildren > 0 && childrensSelected > 0 ) &&
+        (this.config.childrenCountProperty ?
+          childrensSelected === parentTag[this.config.childrenCountProperty] :
+          childrensSelected === parentTagChildren
+        )
+      ) {
         this.addTag(parentTag);
         this.selectRelatedTags(parentTag, false, false);
       }

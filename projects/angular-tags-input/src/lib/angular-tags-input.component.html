@@ -1,4 +1,6 @@
-<div class="angular-tags-input {{config.defaultClass}} {{config.additionalClasses}}">
+<div
+  class="angular-tags-input"
+  [ngClass]="config.defaultClass + ' ' + config.additionalClasses">
   <div class="angular-tags-input__inp-container">
     <ng-container *ngIf="!config.hideTags">
       <ti-tag
@@ -24,7 +26,7 @@
   </div>
   <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="dropdownTrigger" [cdkConnectedOverlayOpen]="isDropdownOpen"
     [cdkConnectedOverlayHasBackdrop]="true" (backdropClick)="hideDropdown()"
-    cdkConnectedOverlayPanelClass="angular-tags-input-dd-overlay{{config.dropdownClass}}"
+    [cdkConnectedOverlayPanelClass]="'angular-tags-input-dd-overlay' + config.dropdownClass"
     [cdkConnectedOverlayScrollStrategy]="ddScrollStrategy"
     [cdkConnectedOverlayPositions]="dropdownOverlayPosition">
     <div class="angular-tags-input__dd-container">

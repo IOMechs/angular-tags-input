@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AngularTagsInputComponent } from './angular-tags-input.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('AngularTagsInputComponent', () => {
   let component: AngularTagsInputComponent;
@@ -8,6 +10,7 @@ describe('AngularTagsInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [OverlayModule, ReactiveFormsModule, FormsModule],
       declarations: [ AngularTagsInputComponent ]
     })
     .compileComponents();

@@ -5,8 +5,8 @@
 
 <!-- Default Tag Options Template -->
 <ng-template #defaultTagItemTemplate let-item="item" let-tagClass="tagClass" let-config="config" let-closeClicked="closeClicked">
-  <div class="angular-tag {{tagClass}}">
-    <div class="angular-tag__text">
+  <div class="angular-tag" [ngClass]="tagClass + ''">
+    <div class="angular-tag__text" *ngIf="config">
       {{item[config.displayProperty]}}
     </div>
     <button type="button" class="angular-tag__close-btn" (click)="closeClicked.emit(item)">

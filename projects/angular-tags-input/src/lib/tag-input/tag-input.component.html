@@ -1,4 +1,4 @@
-<div class="angular-tag-input {{inputClass}}">
+<div class="angular-tag-input" [ngClass]="inputClass + ''">
   <form no-validate [formGroup]="tagInputForm">
     <input
       #inputEl
