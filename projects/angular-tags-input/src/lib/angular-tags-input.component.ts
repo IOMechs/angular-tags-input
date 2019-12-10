@@ -204,7 +204,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   }
 
   ngAfterViewInit() {
-    if (!!this.config && !this.onChange) {
+    if (!!this.config || !this.onChange) {
       console.warn('Please use ngModel or FormControlName with <ti-angular-tags-input>');
     }
     if (this.config.nestedTagProperty) {
