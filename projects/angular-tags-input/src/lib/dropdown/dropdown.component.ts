@@ -9,7 +9,8 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-
+import { ListKeyManager, ListKeyManagerOption } from '@angular/cdk/a11y';
+import { UP_ARROW, DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
 import { AngularTagItem, AngularTagsInputConfig, AngularTagsInputDDFns } from '../tags-input-interfaces';
 
 @Component({
@@ -22,10 +23,13 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
   @Input() listItems: Array<AngularTagItem> = [];
   @Input() dropDownTemplate: TemplateRef<any>;
   @Input() tagsLoading: boolean;
+  @Input() keyPress: any;
   @Output() itemAdded = new EventEmitter<AngularTagItem>();
-  @Output() itemClicked = new EventEmitter<AngularTagItem>();
+  @Output() itemClicked = new EventEmitter<any>();
   @ViewChild('defaultTagOptionTemplate', { static: true }) defaultTagOptionTemplate: TemplateRef<any>;
   context: any;
+  activeIndex: number;
+  keyboardEventsManager: ListKeyManager<ListKeyManagerOption>;
   constructor() { }
 
   ngOnInit() {
@@ -40,6 +44,7 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
         onItemClicked: this.onItemClicked.bind(this)
       }
     };
+    this.keyboardEventsManager = new ListKeyManager(this.context.items);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -68,5 +73,18 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
   onItemClicked(item: AngularTagItem) {
     this.itemClicked.emit(item);
   }
+
+  handleKeyUp(event: KeyboardEvent) {
+    event.stopImmediatePropagation();
+    if (this.keyboardEventsManager) {
+       if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+          // passing the event to key manager so we get a change fired
+          this.keyboardEventsManager.onKeydown(event);
+          this.activeIndex = this.keyboardEventsManager.activeItemIndex;
+       } else if (event.keyCode === ENTER) {
+          this.itemClicked.emit(this.keyboardEventsManager.activeItem);
+       }
+    }
+ }
 
 }

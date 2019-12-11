@@ -14,6 +14,7 @@ export class TagInputComponent implements OnInit {
   @Output() valueChanged = new EventEmitter<string>();
   @Output() inputFocused = new EventEmitter<string>();
   @Output() inputBlurred = new EventEmitter<string>();
+  @Output() inputKeyPress = new EventEmitter();
   @Output() tagEntered = new EventEmitter<AngularTagItem>();
   @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
   tagInputForm = new FormGroup({
