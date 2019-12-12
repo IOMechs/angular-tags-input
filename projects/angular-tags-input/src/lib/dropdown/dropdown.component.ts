@@ -25,7 +25,7 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
   @Input() tagsLoading: boolean;
   @Input() keyPress: any;
   @Output() itemAdded = new EventEmitter<AngularTagItem>();
-  @Output() itemClicked = new EventEmitter<any>();
+  @Output() itemClicked = new EventEmitter<AngularTagItem>();
   @ViewChild('defaultTagOptionTemplate', { static: true }) defaultTagOptionTemplate: TemplateRef<any>;
   context: any;
   activeIndex: number;
@@ -82,7 +82,7 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
           this.keyboardEventsManager.onKeydown(event);
           this.activeIndex = this.keyboardEventsManager.activeItemIndex;
        } else if (event.keyCode === ENTER) {
-          this.itemClicked.emit(this.keyboardEventsManager.activeItem);
+          this.itemClicked.emit(this.keyboardEventsManager.activeItem as AngularTagItem);
        }
     }
  }

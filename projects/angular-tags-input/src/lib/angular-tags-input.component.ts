@@ -114,6 +114,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
+    if (!val) {
+      this.hideDropdown();
+    }
   }
 
   ngOnInit() {
