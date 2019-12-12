@@ -19,6 +19,7 @@ import { TagInputComponent } from './tag-input/tag-input.component';
 import { AngularTagItem, AngularTagsInputConfig } from './tags-input-interfaces';
 import { UnAddedTagsPipe } from './un-added-tags.pipe';
 import { DropdownComponent } from './dropdown/dropdown.component';
+import { KEY_CODES } from './constants';
 
 @Component({
   selector: 'ti-angular-tags-input',
@@ -205,7 +206,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @desc Hides the options listing dropdown
    */
   hideDropdown() {
-    this.isDropdownOpen = false;
+    // this.isDropdownOpen = false;
   }
 
   ngAfterViewInit() {
@@ -400,7 +401,19 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   }
 
   inputKeyPress($event) {
-    this.dropdown.handleKeyUp($event);
+    if (
+      !this.isDropdownOpen &&
+      (
+        $event.key === KEY_CODES.ARROW_UP ||
+        $event.key === KEY_CODES.ARROW_DOWN
+      )
+    ) {
+      this.isDropdownOpen = true;
+    }
+    // so we have the dropdown shown
+    setTimeout(() => {
+      this.dropdown.handleKeyUp($event);
+    }, 0);
   }
 
 }

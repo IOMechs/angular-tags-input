@@ -12,6 +12,7 @@ import {
 import { ListKeyManager, ListKeyManagerOption } from '@angular/cdk/a11y';
 import { UP_ARROW, DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
 import { AngularTagItem, AngularTagsInputConfig, AngularTagsInputDDFns } from '../tags-input-interfaces';
+import { KEY_CODES } from '../constants';
 
 @Component({
   selector: 'ti-dropdown',
@@ -76,14 +77,27 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
 
   handleKeyUp(event: KeyboardEvent) {
     event.stopImmediatePropagation();
-    if (this.keyboardEventsManager) {
-       if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
-          // passing the event to key manager so we get a change fired
-          this.keyboardEventsManager.onKeydown(event);
-          this.activeIndex = this.keyboardEventsManager.activeItemIndex;
-       } else if (event.keyCode === ENTER) {
+    if (!this.keyboardEventsManager) {
+      return;
+    }
+    if (event.key !== undefined) {
+      if (event.key === KEY_CODES.ARROW_DOWN || event.key === KEY_CODES.ARROW_UP) {
+        // passing the event to key manager so we get a change fired
+        this.keyboardEventsManager.onKeydown(event);
+        this.activeIndex = this.keyboardEventsManager.activeItemIndex;
+      } else if (event.key === KEY_CODES.ENTER && this.keyboardEventsManager.activeItem) {
           this.itemClicked.emit(this.keyboardEventsManager.activeItem as AngularTagItem);
-       }
+      }
+    } else if (event.code !== undefined) {
+      // tslint:disable-next-line: deprecation
+      if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+        // passing the event to key manager so we get a change fired
+        this.keyboardEventsManager.onKeydown(event);
+        this.activeIndex = this.keyboardEventsManager.activeItemIndex;
+        // tslint:disable-next-line: deprecation
+      } else if (event.keyCode === ENTER && this.keyboardEventsManager.activeItem) {
+          this.itemClicked.emit(this.keyboardEventsManager.activeItem as AngularTagItem);
+      }
     }
  }
 
