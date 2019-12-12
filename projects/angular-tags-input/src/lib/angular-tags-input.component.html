@@ -21,7 +21,8 @@
       (tagEntered)="addTag($event)"
       (valueChanged)="valueChanged.emit($event)"
       (inputFocused)="onInputFocus()"
-      (inputBlurred)="onFocusChange(false);">
+      (inputBlurred)="onFocusChange(false);"
+      (inputKeyPress)="inputKeyPress($event)">
     </ti-tag-input>
   </div>
   <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="dropdownTrigger" [cdkConnectedOverlayOpen]="isDropdownOpen"

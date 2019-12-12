@@ -10,7 +10,8 @@
       <div
         class="angular-tags-dropdown__list__item"
         (click)="onItemClicked(item)"
-        *ngFor="let item of items">
+        *ngFor="let item of items, let i = index"
+        [class.angular-tags-dropdown__list__item--active]="i === activeIndex">
         {{item[config.displayProperty]}}
       </div>
     </div>

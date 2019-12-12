@@ -18,6 +18,7 @@ import { AngularTagsInputService } from './angular-tags-input.service';
 import { TagInputComponent } from './tag-input/tag-input.component';
 import { AngularTagItem, AngularTagsInputConfig } from './tags-input-interfaces';
 import { UnAddedTagsPipe } from './un-added-tags.pipe';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @Component({
   selector: 'ti-angular-tags-input',
@@ -28,6 +29,7 @@ import { UnAddedTagsPipe } from './un-added-tags.pipe';
   ]
 })
 export class AngularTagsInputComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
+  @ViewChild(DropdownComponent, { static: false }) dropdown: DropdownComponent;
   @Input() config: AngularTagsInputConfig;
   @Input() tagsData: Array<any> = [];
   @Input() tagsLoading: boolean;
@@ -112,6 +114,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
+    if (!val) {
+      this.hideDropdown();
+    }
   }
 
   ngOnInit() {
@@ -283,7 +288,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         this.tags,
         this.config
       )
-    )
+    );
   }
 
   /**
@@ -392,6 +397,10 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    */
   setDisabledState?(isDisabled: boolean): void {
     this.inputDisabled = isDisabled;
+  }
+
+  inputKeyPress($event) {
+    this.dropdown.handleKeyUp($event);
   }
 
 }

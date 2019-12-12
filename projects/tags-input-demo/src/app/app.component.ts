@@ -11,15 +11,19 @@ export class AppComponent {
   simpleForm: FormGroup;
   title = 'tags-input-demo';
   sampleData = [{
+    id: '1',
     name: 'Ahsan',
     designation: 'Senior engineer'
   }, {
+    id: '2',
     name: 'Saad',
     designation: 'Software engineer'
   }, {
+    id: '3',
     name: 'Mohsin',
     designation: 'Software engineer'
   }, {
+    id: '4',
     name: 'Siraj',
     designation: 'Senior engineer'
   }];
@@ -32,7 +36,7 @@ export class AppComponent {
     additionalClasses: 'ti-tags-input',
     displayProperty: 'name',
     identifier: 'id',
-    toggleSelectionOnClick: false,
+    toggleSelectionOnClick: true,
     nestedTagParentProp: 'parent_id',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
