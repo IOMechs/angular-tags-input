@@ -5,6 +5,7 @@
       (keyup.enter)="onEnterKeyPress()"
       [placeholder]="config?.placeholder"
       formControlName="tagInputVal"
+      (click)="emitInputFocused()"
       (focus)="emitInputFocused()"
       (blur)="inputBlurred.emit()"
       (keyup)="inputKeyPress.emit($event)"

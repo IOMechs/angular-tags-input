@@ -18,6 +18,7 @@ export interface AngularTagsInputConfig {
   hideInputOnSelection?: boolean;
   dropdownClass?: string;
   showParentTagsOnly?: boolean;
+  hideDDOnBlur?: boolean;
 }
 
 export interface AngularTagsInputDDFns {
@@ -27,4 +28,7 @@ export interface AngularTagsInputDDFns {
 
 export interface AngularTagItem {
   newTag?: boolean;
+  tiSelected?: boolean;
+  tiKeyboardActive?: boolean;
+  tiIdentifier?: string;
 }

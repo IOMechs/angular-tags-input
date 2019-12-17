@@ -1,7 +1,7 @@
 <div
   class="angular-tags-input"
   [ngClass]="config.defaultClass + ' ' + config.additionalClasses">
-  <div class="angular-tags-input__inp-container">
+  <div class="angular-tags-input__inp-container" #dropdownTrigger="cdkOverlayOrigin" cdkOverlayOrigin>
     <ng-container *ngIf="!config.hideTags">
       <ti-tag
         class="angular-tags-input__inp-container__tag"
@@ -14,8 +14,6 @@
     </ng-container>
     <ti-tag-input
       [style.display]="config.hideInputOnSelection && tags.length ? 'none' : 'block'"
-      cdkOverlayOrigin
-      #dropdownTrigger="cdkOverlayOrigin"
       [config]="config"
       class="angular-tags-input__inp-container__tag-input"
       (tagEntered)="addTag($event)"
@@ -26,10 +24,11 @@
     </ti-tag-input>
   </div>
   <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="dropdownTrigger" [cdkConnectedOverlayOpen]="isDropdownOpen"
-    [cdkConnectedOverlayHasBackdrop]="true" (backdropClick)="hideDropdown()"
-    [cdkConnectedOverlayPanelClass]="'angular-tags-input-dd-overlay' + config.dropdownClass"
+    [cdkConnectedOverlayHasBackdrop]="false" (backdropClick)="hideDropdown()"
+    [cdkConnectedOverlayPanelClass]="'angular-tags-input-dd-overlay' + config.dropdownClass ? config.dropdownClass : ''"
     [cdkConnectedOverlayScrollStrategy]="ddScrollStrategy"
-    [cdkConnectedOverlayPositions]="dropdownOverlayPosition">
+    [cdkConnectedOverlayPositions]="dropdownOverlayPosition"
+    [cdkConnectedOverlayMinWidth]="310">
     <div class="angular-tags-input__dd-container">
       <ti-dropdown
         (itemClicked)="onItemClicked($event);"

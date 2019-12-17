@@ -303,12 +303,13 @@
 </div>
 
   <div class="content" role="main">
-    <form [formGroup]="simpleForm">
-      <ti-angular-tags-input formControlName="users" class=""
+    <form [formGroup]="simpleForm" class="main__form">
+      <ti-angular-tags-input formControlName="users" class="main__form__ti"
         [tagsData]="sampleData"
         (tagAdded)="onTagAdded($event)"
         (valueChanged)="onValChanged($event)"
         [config]="simpleTagsInputConfig"
+        [dropDownTemplate]="ddNestedTemplate"
         >
       </ti-angular-tags-input>
     </form>
@@ -349,3 +350,39 @@
 
 
 <router-outlet></router-outlet>
+
+
+<ng-template #ddNestedTemplate let-items="items" let-config="config" let-fns="fns">
+  <div class="items-list">
+    <div class="items-list__item" *ngFor="let item of items">
+      <div [ngClass]="{'items-list__item__parent--selected': item.tiKeyboardActive}" class="items-list__item__parent" (click)="fns.onItemClicked(item)">
+        <div class="items-list__item__parent__text">
+          {{item.name}}
+        </div>
+      </div>
+      <ng-container
+        *ngTemplateOutlet="ddNestedChildrenTemplate; context: {items: item[config.nestedTagProperty], config: config, fns: fns}">
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #ddNestedChildrenTemplate let-items="items" let-fns="fns" let-config="config">
+  <div class="items-children-list__item__children">
+    <div
+      [ngClass]="{'items-children-list__item__children__child--selected': item.tiKeyboardActive}"
+      *ngFor="let item of items"
+      class="items-children-list__item__children__child"
+      (click)="fns.onItemClicked(item, $event)">
+      <div class="items-children-list__item__children__child__item">
+        <div class="items-children-list__item__children__child__item__text">
+          {{item.name}}
+        </div>
+      </div>
+      <ng-container
+        *ngTemplateOutlet="ddNestedChildrenTemplate; context: {items: item[config.nestedTagProperty], config: config, fns: fns}">
+      </ng-container>
+    </div>
+
+  </div>
+</ng-template>

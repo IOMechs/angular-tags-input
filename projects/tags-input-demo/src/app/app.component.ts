@@ -13,11 +13,47 @@ export class AppComponent {
   sampleData = [{
     id: '1',
     name: 'Ahsan',
-    designation: 'Senior engineer'
+    designation: 'Senior engineer',
+    subOrdinates: [{
+      id: '1.1',
+      name: 'Ali',
+      designation: 'Software engineer'
+    }, {
+      id: '1.2',
+      name: 'Asghar',
+      designation: 'Software engineer'
+    }]
   }, {
     id: '2',
     name: 'Saad',
-    designation: 'Software engineer'
+    designation: 'Software engineer',
+    subOrdinates: [{
+      id: '2.1',
+      name: 'Zuhair',
+      designation: 'Software engineer',
+      subOrdinates: [{
+        id: '2.1.1',
+        name: 'Yawar',
+        designation: 'Software engineer'
+      }, {
+        id: '2.1.2',
+        name: 'Abbas',
+        designation: 'Software engineer'
+      }]
+    }, {
+      id: '2.2',
+      name: 'Mehdi',
+      designation: 'Software engineer',
+      subOrdinates: [{
+        id: '2.2.1',
+        name: 'Zainab',
+        designation: 'Software engineer'
+      }, {
+        id: '2.2.2',
+        name: 'Salim',
+        designation: 'Software engineer'
+      }]
+    }]
   }, {
     id: '3',
     name: 'Mohsin',
@@ -31,7 +67,8 @@ export class AppComponent {
   simpleTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
     hideAddedTags: false,
-    nestedTagProperty: 'sub_location',
+    hideDDOnBlur: true,
+    nestedTagProperty: 'subOrdinates',
     onlyFromAutoComplete: true,
     additionalClasses: 'ti-tags-input',
     displayProperty: 'name',
@@ -40,7 +77,6 @@ export class AppComponent {
     nestedTagParentProp: 'parent_id',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
-    childrenCountProperty: 'sub_locations_count',
     hideTags: true,
   };
 

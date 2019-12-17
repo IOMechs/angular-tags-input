@@ -59,10 +59,10 @@ export class AngularTagsInputService {
       const parentTagChildren = parentTag[config.nestedTagProperty].length;
       const childrensSelected = parentTag[config.nestedTagProperty].filter((tagItem) => {
         // tslint:disable-next-line:triple-equals
-        return !!tagItem['selected'];
+        return !!tagItem.tiSelected;
       }).length;
       if (parentTagChildren > 0 && childrensSelected > 0 && childrensSelected === parentTagChildren) {
-        parentTag['selected'] = true;
+        parentTag.tiSelected = true;
         if (!parentTag[config.nestedTagParentProp]) {
           return parentTag;
         } else {

@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -27,7 +28,8 @@ import { KEY_CODES } from './constants';
   styleUrls: ['./angular-tags-input.component.scss'],
   providers: [
     getAngularTagsInputValueAccessor()
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class AngularTagsInputComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
   @ViewChild(DropdownComponent, { static: false }) dropdown: DropdownComponent;
@@ -115,7 +117,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
-    if (!val) {
+    if (!val && this.config.hideDDOnBlur) {
       this.hideDropdown();
     }
   }
@@ -206,7 +208,20 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @desc Hides the options listing dropdown
    */
   hideDropdown() {
-    // this.isDropdownOpen = false;
+    this.isDropdownOpen = false;
+    this.tagsData = this.removeKeyboardSelection(this.tagsData);
+  }
+
+  removeKeyboardSelection(items: Array<AngularTagItem>) {
+    return items.map((tag: AngularTagItem) => {
+      if (tag[this.config.nestedTagProperty] && tag[this.config.nestedTagProperty].length) {
+        tag[this.config.nestedTagProperty] = this.removeKeyboardSelection(tag[this.config.nestedTagProperty]);
+      }
+      return {
+        ...tag,
+        tiKeyboardActive: false
+      };
+    });
   }
 
   ngAfterViewInit() {
@@ -229,7 +244,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - tag to add
    */
   addTag(tag: AngularTagItem) {
-    tag['selected'] = true; // marks the element as selected
+    tag.tiSelected = true; // marks the element as selected
     if (this.config.maxItems > 0 && this.tags.length === this.config.maxItems) {
       return;
     }
@@ -267,7 +282,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     // if we don't have to toggle, add the item as tag right away
     if (this.config.toggleSelectionOnClick) {
       // we have to toggle selection. First, let's see if the tag doesn't exist already in the selected tags
-      if (!tag['selected'] && !this.tags.find(tagItem => tagItem[this.config.identifier] === tag[this.config.identifier])) {
+      if (!tag.tiSelected && !this.tags.find(tagItem => tagItem[this.config.identifier] === tag[this.config.identifier])) {
         this.addTag(tag);
         this.selectRelatedTags(tag);
       } else {  // if the tag is already selected, remove
@@ -298,7 +313,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - the tag to unmark as selected
    */
   removeTagSelection(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
-    tag['selected'] = false;
+    tag.tiSelected = false;
     if (!ignoreChildren && tag[this.config.nestedTagProperty]) {
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
         this.removeTag(tag[this.config.nestedTagProperty][i], ignoreChildren, true);
@@ -311,7 +326,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         tag[this.config.nestedTagParentProp],
         this.config
       );
-      if (parentTag && parentTag['selected']) {
+      if (parentTag && parentTag.tiSelected) {
         this.removeTag(parentTag, true, ignoreParent);
         this.removeTagSelection(parentTag, true, ignoreParent);
         parentTag[this.config.nestedTagProperty].map((tagItem) => {
@@ -345,7 +360,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - the tag to mark as selected
    */
   selectRelatedTags(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
-    tag['selected'] = true;
+    tag.tiSelected = true;
     if (tag[this.config.nestedTagProperty] && !ignoreChildren) {
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
         if (this.config.showParentTagsOnly) {
