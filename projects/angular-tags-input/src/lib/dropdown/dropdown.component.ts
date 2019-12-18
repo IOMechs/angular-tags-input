@@ -17,6 +17,7 @@ import {
   AngularTagsInputDDFns
 } from '../tags-input-interfaces';
 import { KEY_CODES } from '../constants';
+import { AngularTagsInputService } from '../angular-tags-input.service';
 
 @Component({
   selector: 'ti-dropdown',
@@ -34,11 +35,15 @@ export class DropdownComponent
   @Output() itemClicked = new EventEmitter<AngularTagItem>();
   @ViewChild('defaultTagOptionTemplate', { static: true })
   defaultTagOptionTemplate: TemplateRef<any>;
+  ddIdPrefix: string;
   context: any;
   activeIndex: number;
+  identifierSeparator = '__';
   keyboardEventsManager: ListKeyManager<ListKeyManagerOption>;
   itemsMap: Map<string, any> = new Map<string, any>();
-  constructor() {}
+  constructor(
+    private tagsInputService: AngularTagsInputService
+  ) {}
 
   ngOnInit() {
     if (!this.dropDownTemplate) {
@@ -55,6 +60,7 @@ export class DropdownComponent
     };
     this.keyboardEventsManager = new ListKeyManager([...this.listItems as any]);
     this.populateItemsMap(this.listItems);
+    this.ddIdPrefix = this.getRandomString();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -72,13 +78,18 @@ export class DropdownComponent
    */
   updateItems(itemsUpdated) {
     this.context.items = itemsUpdated;
+    this.ddIdPrefix = this.getRandomString();
+  }
+
+  private getRandomString() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 
   populateItemsMap(items, prefix = null) {
     if (prefix === null) {
       prefix = '';
     } else {
-      prefix += '.';
+      prefix += this.identifierSeparator;
     }
     items.map((item, index) => {
       const newPrefix = prefix + index;
@@ -148,25 +159,30 @@ export class DropdownComponent
     } else if (isKeyUp) {
       this.setPreviousActiveElement(previousActiveItem, this.listItems);
     }
-    // this.setActiveElementA(previousActiveItem, this.listItems, event);
   }
 
   setNextActiveElement(currentActiveItem: AngularTagItem, items) {
     const identifier = currentActiveItem.tiIdentifier;
     if (!identifier) {
       items[0].tiKeyboardActive = true;
-      this.keyboardEventsManager.setActiveItem(items[0]);
+      this.keyboardEventsManager.setFirstItemActive();
       return;
     }
-    const keyIdentifierArr = identifier.split('.');
-    const keyIdentifier = keyIdentifierArr.length > 1 ?
-      [...keyIdentifierArr].splice(0, keyIdentifierArr.length - 1).join('.') + '.' :
+    const keyIdentifierArr = identifier.split(this.identifierSeparator);
+    let keyIdentifier;
+    let treeItems;
+    let index;
+    keyIdentifier = keyIdentifierArr.length > 1 ?
+      [...keyIdentifierArr].splice(0, keyIdentifierArr.length - 1).join(this.identifierSeparator) :
       keyIdentifierArr[0];
-    const treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}`).test(key));
-    const index = treeItems.findIndex(id => id === identifier);
+    treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}${this.identifierSeparator}`).test(key));
+    if (!treeItems.length) {
+      treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}$`).test(key));
+    }
+    index = treeItems.findIndex(id => id === identifier);
     if (index === treeItems.length - 1) {
       this.setActiveElementRecursively(this.findNextParent(keyIdentifierArr), this.listItems);
-    } else {
+    } else  {
       this.setActiveElementRecursively(treeItems[index + 1], this.listItems);
     }
   }
@@ -175,11 +191,15 @@ export class DropdownComponent
     let keyIdentifier;
     let treeItems;
     if (keyIdentifierArr.length === 1) {
-      return `${+keyIdentifierArr[0] + 1}`;
+      const nextIdentifier = `${+keyIdentifierArr[0] + 1}`;
+      if (this.itemsMap[nextIdentifier]) {
+        return nextIdentifier;
+      }
+      return keyIdentifierArr[0];
     }
     const nextIdArr = [...keyIdentifierArr].splice(0, keyIdentifierArr.length - 1);
     nextIdArr[nextIdArr.length - 1] = `${(+nextIdArr[nextIdArr.length - 1]) + 1}`;
-    keyIdentifier = nextIdArr.join('.');
+    keyIdentifier = nextIdArr.join(this.identifierSeparator);
     treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}`).test(key));
     if (treeItems.length) {
       return treeItems[0];
@@ -196,12 +216,18 @@ export class DropdownComponent
       return;
     }
 
-    const keyIdentifierArr = identifier.split('.');
-    const keyIdentifier = keyIdentifierArr.length > 1 ?
-      [...keyIdentifierArr].splice(0, keyIdentifierArr.length - 1).join('.') + '.' :
+    const keyIdentifierArr = identifier.split(this.identifierSeparator);
+    let keyIdentifier;
+    let treeItems;
+    let index;
+    keyIdentifier = keyIdentifierArr.length > 1 ?
+      [...keyIdentifierArr].splice(0, keyIdentifierArr.length - 1).join(this.identifierSeparator) :
       keyIdentifierArr[0];
-    const treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}`).test(key));
-    const index = treeItems.findIndex(id => id === identifier);
+    treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}(${this.identifierSeparator})?`).test(key));
+    if (!treeItems.length) {
+      treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}$`).test(key));
+    }
+    index = treeItems.findIndex(id => id === identifier);
     if (treeItems.length === 1 || index === 0) {
       this.setActiveElementRecursively(this.findPrevousParentLastChild(keyIdentifierArr, identifier), this.listItems);
     } else {
@@ -216,15 +242,21 @@ export class DropdownComponent
       [...keyIdentifierArr] :
       [...keyIdentifierArr].splice(0, keyIdentifierArr.length - 1);
     prevIdArr[prevIdArr.length - 1] = !!isOnlyItem ? `${(+prevIdArr[prevIdArr.length - 1]) - 1}` : prevIdArr[prevIdArr.length - 1];
-    keyIdentifier = prevIdArr.join('.');
-    const treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}`).test(key));
+    keyIdentifier = prevIdArr.join(this.identifierSeparator);
+    let treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}${this.identifierSeparator}`).test(key));
+    if (!treeItems.length) {
+      treeItems = Object.keys(this.itemsMap).filter(key => new RegExp(`^${keyIdentifier}$`).test(key));
+    }
     if (treeItems.length) {
       if (treeItems.indexOf(prevItemIdentifier) !== -1) {
         return keyIdentifier;
       }
       return treeItems[treeItems.length - 1];
-    } else {
+    } else if (keyIdentifierArr.length > 1) {
       return this.findPrevousParentLastChild([...keyIdentifierArr.splice(0, keyIdentifierArr.length - 1)], prevItemIdentifier);
+    } else {
+      keyIdentifier = keyIdentifierArr.join(this.identifierSeparator);
+      return keyIdentifier;
     }
   }
 

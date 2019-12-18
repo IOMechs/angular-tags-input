@@ -5,7 +5,7 @@ import { AngularTagsInputConfig } from './tags-input-interfaces';
   providedIn: 'root'
 })
 export class AngularTagsInputService {
-
+  debugMode = false;
   constructor() { }
 
   /**
@@ -29,6 +29,17 @@ export class AngularTagsInputService {
         }
       }
     }
+  }
+
+  setDebugMode(mode: boolean) {
+    this.debugMode = mode;
+  }
+
+  log(logMessage: any, logLabel = '') {
+    if (!this.debugMode) {
+      return;
+    }
+    console.log(logLabel, logMessage);
   }
 
   findParent(tagsArray, tagItem, config: AngularTagsInputConfig) {

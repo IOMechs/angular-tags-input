@@ -7,8 +7,7 @@
       formControlName="tagInputVal"
       (click)="emitInputFocused()"
       (focus)="emitInputFocused()"
-      (blur)="inputBlurred.emit()"
-      (keyup)="inputKeyPress.emit($event)"
+      (blur)="emitInputBlurred()"
       class="angular-tag-input__input"
       autocomplete="off">
   </form>

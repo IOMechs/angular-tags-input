@@ -24,7 +24,7 @@
     </ti-tag-input>
   </div>
   <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="dropdownTrigger" [cdkConnectedOverlayOpen]="isDropdownOpen"
-    [cdkConnectedOverlayHasBackdrop]="false" (backdropClick)="hideDropdown()"
+    [cdkConnectedOverlayHasBackdrop]="config.ddHasBackdrop" (backdropClick)="hideDropdown()"
     [cdkConnectedOverlayPanelClass]="'angular-tags-input-dd-overlay' + config.dropdownClass ? config.dropdownClass : ''"
     [cdkConnectedOverlayScrollStrategy]="ddScrollStrategy"
     [cdkConnectedOverlayPositions]="dropdownOverlayPosition"

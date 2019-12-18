@@ -12,6 +12,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
+  HostListener,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -57,7 +58,8 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     showTagsSelectedInDD: false,
     hideTags: false,
     maxItems: null,
-    nestedTagParentProp: ''
+    nestedTagParentProp: '',
+    keyboardActiveClass: 'angular-tags-dropdown__list__item--active'
   };
   onChange: (items: AngularTagItem[]) => void;
   inputDisabled: boolean;
@@ -75,6 +77,12 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     private readonly sso: ScrollStrategyOptions,
     private tagsService: AngularTagsInputService
   ) { }
+
+
+  @HostListener('keyup', ['$event'])
+  keyEvent(event) {
+    this.inputKeyPress(event);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     // if there's no change in the tagsData, do nothing
@@ -416,6 +424,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   }
 
   inputKeyPress($event) {
+    $event.stopImmediatePropagation();
     if (
       !this.isDropdownOpen &&
       (
@@ -424,11 +433,16 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
       )
     ) {
       this.isDropdownOpen = true;
+    } else if (
+      this.isDropdownOpen &&
+      $event.key === KEY_CODES.ESCAPE
+    ) {
+      return this.hideDropdown();
     }
     // so we have the dropdown shown
     setTimeout(() => {
       this.dropdown.handleKeyUp($event);
-    }, 0);
+    }, 10);
   }
 
 }

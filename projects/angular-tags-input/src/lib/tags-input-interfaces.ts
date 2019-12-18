@@ -1,5 +1,7 @@
 export interface AngularTagsInputConfig {
   defaultClass?: string;
+  ddHasBackdrop?: boolean;
+  keyboardActiveClass?: string;
   additionalClasses?: string;
   placeholder?: string;
   displayProperty?: string;

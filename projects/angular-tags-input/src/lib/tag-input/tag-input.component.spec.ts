@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TagInputComponent } from './tag-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('TagInputComponent', () => {
   let component: TagInputComponent;
@@ -8,7 +9,8 @@ describe('TagInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagInputComponent ]
+      declarations: [ TagInputComponent ],
+      imports: [ReactiveFormsModule]
     })
     .compileComponents();
   }));
