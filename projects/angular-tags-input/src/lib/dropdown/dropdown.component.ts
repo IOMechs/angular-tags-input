@@ -95,6 +95,9 @@ export class DropdownComponent
       const newPrefix = prefix + index;
       item.tiIdentifier = newPrefix;
       this.itemsMap[newPrefix] = item;
+      if (this.config.showParentTagsOnly) {
+        return;
+      }
       if (item[this.config.nestedTagProperty] && item[this.config.nestedTagProperty].length) {
         this.populateItemsMap(item[this.config.nestedTagProperty], newPrefix);
       }
