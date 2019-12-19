@@ -36,6 +36,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   @ViewChild(DropdownComponent, { static: false }) dropdown: DropdownComponent;
   @Input() config: AngularTagsInputConfig;
   @Input() tagsData: Array<any> = [];
+  @Input() disabled = false;
   @Input() tagsLoading: boolean;
   @Input() dropDownTemplate: TemplateRef<any> = null;
   @Input() tagItemTemplate: TemplateRef<any> = null;
@@ -62,7 +63,6 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     keyboardActiveClass: 'angular-tags-dropdown__list__item--active'
   };
   onChange: (items: AngularTagItem[]) => void;
-  inputDisabled: boolean;
   dropdownOverlayPosition = [
     { offsetY: 28, originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
     { offsetY: -28, originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
@@ -126,7 +126,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
     if (!val && this.config.hideDDOnBlur) {
-      this.hideDropdown();
+      setTimeout(() => {
+        this.hideDropdown();
+      }, 400);
     }
   }
 
@@ -269,7 +271,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @desc Removes the tags from the tags list
    * @param tag - tag to remove
    */
-  removeTag(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
+  removeTag(tag: AngularTagItem) {
     this.tags = this.tags.filter((tagItem) => tagItem[this.config.identifier] !== tag[this.config.identifier]);
     // when we've removed all the tags, we want to get the default tags
     if (this.tags.length === 0) {
@@ -324,7 +326,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     tag.tiSelected = false;
     if (!ignoreChildren && tag[this.config.nestedTagProperty]) {
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
-        this.removeTag(tag[this.config.nestedTagProperty][i], ignoreChildren, true);
+        this.removeTag(tag[this.config.nestedTagProperty][i]);
         this.removeTagSelection(tag[this.config.nestedTagProperty][i], ignoreChildren);
       }
     }
@@ -335,7 +337,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         this.config
       );
       if (parentTag && parentTag.tiSelected) {
-        this.removeTag(parentTag, true, ignoreParent);
+        this.removeTag(parentTag);
         this.removeTagSelection(parentTag, true, ignoreParent);
         parentTag[this.config.nestedTagProperty].map((tagItem) => {
           // tslint:disable-next-line:triple-equals
@@ -373,7 +375,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
         if (this.config.showParentTagsOnly) {
           // remove the children if we only have to keep parent
-          this.removeTag(tag[this.config.nestedTagProperty][i], false, true);
+          this.removeTag(tag[this.config.nestedTagProperty][i]);
           // making sure we're targeting only children, ignoring parents
           this.selectRelatedTags(tag[this.config.nestedTagProperty][i], false, true);
         } else {
@@ -413,14 +415,6 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 
   registerOnTouched(fn: any): void {
     // throw new Error("Method not implemented.");
-  }
-
-  /**
-   * @author Ahsan Ayaz
-   * @desc Sets the disabled state for the tags input
-   */
-  setDisabledState?(isDisabled: boolean): void {
-    this.inputDisabled = isDisabled;
   }
 
   inputKeyPress($event) {

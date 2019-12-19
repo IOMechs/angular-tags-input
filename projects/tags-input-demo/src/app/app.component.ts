@@ -17,6 +17,7 @@ export class AppComponent {
   nestedTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
     hideAddedTags: false,
+    childrenCountProperty: 'subOrdinatesCount',
     hideDDOnBlur: true,
     nestedTagProperty: 'subOrdinates',
     onlyFromAutoComplete: true,
@@ -24,7 +25,7 @@ export class AppComponent {
     displayProperty: 'name',
     identifier: 'id',
     toggleSelectionOnClick: true,
-    nestedTagParentProp: 'parent_id',
+    nestedTagParentProp: 'parentId',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: true,

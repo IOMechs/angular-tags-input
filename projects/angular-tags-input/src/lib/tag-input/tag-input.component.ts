@@ -11,6 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class TagInputComponent implements OnInit {
   @Input() inputClass = 'default';
   @Input() config: AngularTagsInputConfig;
+  @Input() disabled = false;
   @Output() valueChanged = new EventEmitter<string>();
   @Output() inputFocused = new EventEmitter<string>();
   @Output() inputBlurred = new EventEmitter<string>();
@@ -40,6 +41,9 @@ export class TagInputComponent implements OnInit {
    * @desc Emits the input focused event with the current search term value
    */
   emitInputFocused() {
+    if (this.disabled) {
+      return;
+    }
     const searchTerm = this.tagInputForm.get('tagInputVal').value;
     this.inputFocused.emit(searchTerm);
 
@@ -75,7 +79,7 @@ export class TagInputComponent implements OnInit {
     this.inputEl.nativeElement.value = '';
   }
 
-  emitInputBlurred() {
-    this.inputBlurred.emit();
+  emitInputBlurred($event) {
+    this.inputBlurred.emit($event);
   }
 }
