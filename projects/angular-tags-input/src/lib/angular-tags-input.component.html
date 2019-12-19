@@ -15,6 +15,7 @@
     <ti-tag-input
       [style.display]="config.hideInputOnSelection && tags.length ? 'none' : 'block'"
       [config]="config"
+      [disabled]="disabled"
       class="angular-tags-input__inp-container__tag-input"
       (tagEntered)="addTag($event)"
       (valueChanged)="valueChanged.emit($event)"
