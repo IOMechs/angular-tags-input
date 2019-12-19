@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { AngularTagItem, AngularTagsInputConfig } from '../tags-input-interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './tag-input.component.html',
   styleUrls: ['./tag-input.component.scss']
 })
-export class TagInputComponent implements OnInit {
+export class TagInputComponent implements OnInit, OnChanges {
   @Input() inputClass = 'default';
   @Input() config: AngularTagsInputConfig;
   @Input() disabled = false;
@@ -34,6 +34,16 @@ export class TagInputComponent implements OnInit {
         this.lastValueEmitted = value;
         this.valueChanged.emit(value);
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.disabled !== undefined) {
+      if (changes.disabled.currentValue === true) {
+        this.tagInputForm.get('tagInputVal').disable();
+      } else {
+        this.tagInputForm.get('tagInputVal').enable();
+      }
+    }
   }
 
   /**
