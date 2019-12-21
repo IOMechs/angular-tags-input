@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 
 import { AngularTagItem, AngularTagsInputConfig, AngularTagsInputDDFns } from '../tags-input-interfaces';
+import { DropdownItemsFilterPipe } from '../dropdown-items-filter.pipe';
 
 @Component({
   selector: 'ti-dropdown',
@@ -20,11 +21,13 @@ import { AngularTagItem, AngularTagsInputConfig, AngularTagsInputDDFns } from '.
 export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChanges {
   @Input() config: AngularTagsInputConfig;
   @Input() listItems: Array<AngularTagItem> = [];
+  @Input() inputVal = '';
   @Input() dropDownTemplate: TemplateRef<any>;
   @Input() tagsLoading: boolean;
   @Output() itemAdded = new EventEmitter<AngularTagItem>();
   @Output() itemClicked = new EventEmitter<AngularTagItem>();
   @ViewChild('defaultTagOptionTemplate', { static: true }) defaultTagOptionTemplate: TemplateRef<any>;
+  dropdownItemsFilter = new DropdownItemsFilterPipe();
   context: any;
   constructor() { }
 
@@ -33,7 +36,7 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
       this.dropDownTemplate = this.defaultTagOptionTemplate;
     }
     this.context = {
-      items: this.listItems,
+      items: [...this.listItems],
       config: this.config,
       tagsLoading: this.tagsLoading,
       fns: {
@@ -47,17 +50,29 @@ export class DropdownComponent implements OnInit, AngularTagsInputDDFns, OnChang
       changes.listItems && !changes.listItems.firstChange
     ) {
       // if the list items change, update the context items (because they're not automatically updated)
-      this.updateItems(changes.listItems.currentValue);
+      this.filterItems(this.inputVal, changes.listItems.currentValue);
+    }
+
+    if (
+      changes.inputVal && !changes.inputVal.firstChange
+    ) {
+      // if the list items change, update the context items (because they're not automatically updated)
+      this.filterItems(changes.inputVal.currentValue);
     }
   }
+
 
   /**
    * @author Ahsan Ayaz
    * @desc Updates the items property for the context provided to the dropdown template
-   * @param itemsUpdated - the updated list of items
+   * @param items - the list of items to be assigned
    */
-  updateItems(itemsUpdated) {
-    this.context.items = itemsUpdated;
+  filterItems(searchTerm = this.inputVal, items = this.listItems) {
+    this.context.items = [...this.dropdownItemsFilter.transform(
+      items,
+      this.config,
+      searchTerm
+    )];
   }
 
   /**

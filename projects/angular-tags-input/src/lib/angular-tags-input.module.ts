@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { UnAddedTagsPipe } from './un-added-tags.pipe';
+import { DropdownItemsFilterPipe } from './dropdown-items-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { UnAddedTagsPipe } from './un-added-tags.pipe';
     TagComponent,
     TagInputComponent,
     DropdownComponent,
-    UnAddedTagsPipe
+    UnAddedTagsPipe,
+    DropdownItemsFilterPipe
   ],
   imports: [
     CommonModule,

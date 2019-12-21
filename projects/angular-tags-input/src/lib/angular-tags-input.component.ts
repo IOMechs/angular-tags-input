@@ -40,6 +40,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   @ViewChild(TagInputComponent, { static: true }) tagInput: TagInputComponent;
   tags: Array<AngularTagItem> = [];
   isInputFocused: boolean;
+  inputVal: string;
   defaultConfig: AngularTagsInputConfig = {
     defaultClass: 'angular-tags-input',
     additionalClasses: '',
@@ -112,6 +113,11 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
+  }
+
+  onInputValueChanged(val: string) {
+    this.inputVal = val;
+    this.valueChanged.emit(val);
   }
 
   ngOnInit() {
