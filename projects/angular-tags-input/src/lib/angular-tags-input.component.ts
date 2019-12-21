@@ -286,6 +286,14 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     } else {
       this.addTag(tag);
       this.selectRelatedTags(tag);
+      this.tagAdded.emit(
+        this.tagsService.getMainTagAfterAdding(
+          this.tagsData,
+          tag,
+          this.tags,
+          this.config
+        )
+      );
     }
     this.tagInput.resetInput();
     this.itemClicked.emit(tag);
