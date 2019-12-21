@@ -18,7 +18,7 @@
       [disabled]="disabled"
       class="angular-tags-input__inp-container__tag-input"
       (tagEntered)="addTag($event)"
-      (valueChanged)="valueChanged.emit($event)"
+      (valueChanged)="onInputValueChanged($event)"
       (inputFocused)="onInputFocus()"
       (inputBlurred)="onFocusChange(false);"
       (inputKeyPress)="inputKeyPress($event)">
@@ -32,6 +32,7 @@
     [cdkConnectedOverlayMinWidth]="310">
     <div class="angular-tags-input__dd-container">
       <ti-dropdown
+        [inputVal]="inputVal"
         (itemClicked)="onItemClicked($event);"
         [dropDownTemplate]="dropDownTemplate"
         [listItems]="tagsData | unAddedTags: {tagsAdded: tags, config: config}"
