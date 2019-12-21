@@ -270,10 +270,18 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
       if (!tag['selected'] && !this.tags.find(tagItem => tagItem[this.config.identifier] === tag[this.config.identifier])) {
         this.addTag(tag);
         this.selectRelatedTags(tag);
+        this.tagAdded.emit(
+          this.tagsService.getMainTagAfterAdding(
+            this.tagsData,
+            tag,
+            this.tags,
+            this.config
+          )
+        );
       } else {  // if the tag is already selected, remove
         this.removeTag(tag);
-        this.tagRemoved.emit(tag);
         this.removeTagSelection(tag);
+        this.tagRemoved.emit(tag);
       }
     } else {
       this.addTag(tag);
@@ -282,14 +290,6 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     this.tagInput.resetInput();
     this.itemClicked.emit(tag);
     this.hideDropdown();
-    this.tagAdded.emit(
-      this.tagsService.getMainTagAfterAdding(
-        this.tagsData,
-        tag,
-        this.tags,
-        this.config
-      )
-    )
   }
 
   /**
