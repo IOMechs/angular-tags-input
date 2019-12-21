@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { UnAddedTagsPipe } from './un-added-tags.pipe';
 import { DropdownItemsFilterPipe } from './dropdown-items-filter.pipe';
+import { KeyboardActiveClassDirective } from './keyboard-active-class/keyboard-active-class.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { DropdownItemsFilterPipe } from './dropdown-items-filter.pipe';
     TagInputComponent,
     DropdownComponent,
     UnAddedTagsPipe,
-    DropdownItemsFilterPipe
+    DropdownItemsFilterPipe,
+    KeyboardActiveClassDirective
   ],
   imports: [
     CommonModule,
@@ -24,6 +26,6 @@ import { DropdownItemsFilterPipe } from './dropdown-items-filter.pipe';
     ReactiveFormsModule,
     OverlayModule
   ],
-  exports: [AngularTagsInputComponent]
+  exports: [AngularTagsInputComponent, KeyboardActiveClassDirective]
 })
 export class AngularTagsInputModule { }

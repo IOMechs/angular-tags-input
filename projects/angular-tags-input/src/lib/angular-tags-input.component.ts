@@ -11,6 +11,8 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
+  HostListener,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -18,6 +20,8 @@ import { AngularTagsInputService } from './angular-tags-input.service';
 import { TagInputComponent } from './tag-input/tag-input.component';
 import { AngularTagItem, AngularTagsInputConfig } from './tags-input-interfaces';
 import { UnAddedTagsPipe } from './un-added-tags.pipe';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { KEY_CODES } from './constants';
 
 @Component({
   selector: 'ti-angular-tags-input',
@@ -25,11 +29,14 @@ import { UnAddedTagsPipe } from './un-added-tags.pipe';
   styleUrls: ['./angular-tags-input.component.scss'],
   providers: [
     getAngularTagsInputValueAccessor()
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class AngularTagsInputComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
+  @ViewChild(DropdownComponent, { static: false }) dropdown: DropdownComponent;
   @Input() config: AngularTagsInputConfig;
   @Input() tagsData: Array<any> = [];
+  @Input() disabled = false;
   @Input() tagsLoading: boolean;
   @Input() dropDownTemplate: TemplateRef<any> = null;
   @Input() tagItemTemplate: TemplateRef<any> = null;
@@ -53,10 +60,10 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     showTagsSelectedInDD: false,
     hideTags: false,
     maxItems: null,
-    nestedTagParentProp: ''
+    nestedTagParentProp: '',
+    keyboardActiveClass: 'angular-tags-dropdown__list__item--active'
   };
   onChange: (items: AngularTagItem[]) => void;
-  inputDisabled: boolean;
   dropdownOverlayPosition = [
     { offsetY: 28, originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
     { offsetY: -28, originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
@@ -71,6 +78,12 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     private readonly sso: ScrollStrategyOptions,
     private tagsService: AngularTagsInputService
   ) { }
+
+
+  @HostListener('keyup', ['$event'])
+  keyEvent(event) {
+    this.inputKeyPress(event);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     // if there's no change in the tagsData, do nothing
@@ -113,6 +126,11 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
+    if (!val && this.config.hideDDOnBlur) {
+      setTimeout(() => {
+        this.hideDropdown();
+      }, 400);
+    }
   }
 
   onInputValueChanged(val: string) {
@@ -207,10 +225,23 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    */
   hideDropdown() {
     this.isDropdownOpen = false;
+    this.tagsData = this.removeKeyboardSelection(this.tagsData);
+  }
+
+  removeKeyboardSelection(items: Array<AngularTagItem>) {
+    return items.map((tag: AngularTagItem) => {
+      if (tag[this.config.nestedTagProperty] && tag[this.config.nestedTagProperty].length) {
+        tag[this.config.nestedTagProperty] = this.removeKeyboardSelection(tag[this.config.nestedTagProperty]);
+      }
+      return {
+        ...tag,
+        tiKeyboardActive: false
+      };
+    });
   }
 
   ngAfterViewInit() {
-    if (!!this.config && !this.onChange) {
+    if (!!this.config || !this.onChange) {
       console.warn('Please use ngModel or FormControlName with <ti-angular-tags-input>');
     }
     if (this.config.nestedTagProperty) {
@@ -229,7 +260,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - tag to add
    */
   addTag(tag: AngularTagItem) {
-    tag['selected'] = true; // marks the element as selected
+    tag.tiSelected = true; // marks the element as selected
     if (this.config.maxItems > 0 && this.tags.length === this.config.maxItems) {
       return;
     }
@@ -246,7 +277,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @desc Removes the tags from the tags list
    * @param tag - tag to remove
    */
-  removeTag(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
+  removeTag(tag: AngularTagItem) {
     this.tags = this.tags.filter((tagItem) => tagItem[this.config.identifier] !== tag[this.config.identifier]);
     // when we've removed all the tags, we want to get the default tags
     if (this.tags.length === 0) {
@@ -267,7 +298,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     // if we don't have to toggle, add the item as tag right away
     if (this.config.toggleSelectionOnClick) {
       // we have to toggle selection. First, let's see if the tag doesn't exist already in the selected tags
-      if (!tag['selected'] && !this.tags.find(tagItem => tagItem[this.config.identifier] === tag[this.config.identifier])) {
+      if (!tag.tiSelected && !this.tags.find(tagItem => tagItem[this.config.identifier] === tag[this.config.identifier])) {
         this.addTag(tag);
         this.selectRelatedTags(tag);
       } else {  // if the tag is already selected, remove
@@ -289,7 +320,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         this.tags,
         this.config
       )
-    )
+    );
   }
 
   /**
@@ -298,10 +329,10 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - the tag to unmark as selected
    */
   removeTagSelection(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
-    tag['selected'] = false;
+    tag.tiSelected = false;
     if (!ignoreChildren && tag[this.config.nestedTagProperty]) {
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
-        this.removeTag(tag[this.config.nestedTagProperty][i], ignoreChildren, true);
+        this.removeTag(tag[this.config.nestedTagProperty][i]);
         this.removeTagSelection(tag[this.config.nestedTagProperty][i], ignoreChildren);
       }
     }
@@ -311,8 +342,8 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         tag[this.config.nestedTagParentProp],
         this.config
       );
-      if (parentTag && parentTag['selected']) {
-        this.removeTag(parentTag, true, ignoreParent);
+      if (parentTag && parentTag.tiSelected) {
+        this.removeTag(parentTag);
         this.removeTagSelection(parentTag, true, ignoreParent);
         parentTag[this.config.nestedTagProperty].map((tagItem) => {
           // tslint:disable-next-line:triple-equals
@@ -345,12 +376,12 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - the tag to mark as selected
    */
   selectRelatedTags(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
-    tag['selected'] = true;
+    tag.tiSelected = true;
     if (tag[this.config.nestedTagProperty] && !ignoreChildren) {
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
         if (this.config.showParentTagsOnly) {
           // remove the children if we only have to keep parent
-          this.removeTag(tag[this.config.nestedTagProperty][i], false, true);
+          this.removeTag(tag[this.config.nestedTagProperty][i]);
           // making sure we're targeting only children, ignoring parents
           this.selectRelatedTags(tag[this.config.nestedTagProperty][i], false, true);
         } else {
@@ -392,12 +423,26 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     // throw new Error("Method not implemented.");
   }
 
-  /**
-   * @author Ahsan Ayaz
-   * @desc Sets the disabled state for the tags input
-   */
-  setDisabledState?(isDisabled: boolean): void {
-    this.inputDisabled = isDisabled;
+  inputKeyPress($event) {
+    $event.stopImmediatePropagation();
+    if (
+      !this.isDropdownOpen &&
+      (
+        $event.key === KEY_CODES.ARROW_UP ||
+        $event.key === KEY_CODES.ARROW_DOWN
+      )
+    ) {
+      this.isDropdownOpen = true;
+    } else if (
+      this.isDropdownOpen &&
+      $event.key === KEY_CODES.ESCAPE
+    ) {
+      return this.hideDropdown();
+    }
+    // so we have the dropdown shown
+    setTimeout(() => {
+      this.dropdown.handleKeyUp($event);
+    }, 10);
   }
 
 }

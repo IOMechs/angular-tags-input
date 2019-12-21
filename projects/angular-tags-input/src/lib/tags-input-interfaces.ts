@@ -1,5 +1,7 @@
 export interface AngularTagsInputConfig {
   defaultClass?: string;
+  ddHasBackdrop?: boolean;
+  keyboardActiveClass?: string;
   additionalClasses?: string;
   placeholder?: string;
   displayProperty?: string;
@@ -18,6 +20,7 @@ export interface AngularTagsInputConfig {
   hideInputOnSelection?: boolean;
   dropdownClass?: string;
   showParentTagsOnly?: boolean;
+  hideDDOnBlur?: boolean;
 }
 
 export interface AngularTagsInputDDFns {
@@ -27,4 +30,7 @@ export interface AngularTagsInputDDFns {
 
 export interface AngularTagItem {
   newTag?: boolean;
+  tiSelected?: boolean;
+  tiKeyboardActive?: boolean;
+  tiIdentifier?: string;
 }

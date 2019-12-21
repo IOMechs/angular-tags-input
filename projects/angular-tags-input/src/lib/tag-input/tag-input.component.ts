@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { AngularTagItem, AngularTagsInputConfig } from '../tags-input-interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -8,9 +8,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './tag-input.component.html',
   styleUrls: ['./tag-input.component.scss']
 })
-export class TagInputComponent implements OnInit {
+export class TagInputComponent implements OnInit, OnChanges {
   @Input() inputClass = 'default';
   @Input() config: AngularTagsInputConfig;
+  @Input() disabled = false;
   @Output() valueChanged = new EventEmitter<string>();
   @Output() inputFocused = new EventEmitter<string>();
   @Output() inputBlurred = new EventEmitter<string>();
@@ -35,11 +36,24 @@ export class TagInputComponent implements OnInit {
       });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.disabled !== undefined) {
+      if (changes.disabled.currentValue === true) {
+        this.tagInputForm.get('tagInputVal').disable();
+      } else {
+        this.tagInputForm.get('tagInputVal').enable();
+      }
+    }
+  }
+
   /**
    * @author Ahsan Ayaz
    * @desc Emits the input focused event with the current search term value
    */
   emitInputFocused() {
+    if (this.disabled) {
+      return;
+    }
     const searchTerm = this.tagInputForm.get('tagInputVal').value;
     this.inputFocused.emit(searchTerm);
 
@@ -75,4 +89,7 @@ export class TagInputComponent implements OnInit {
     this.inputEl.nativeElement.value = '';
   }
 
+  emitInputBlurred($event) {
+    this.inputBlurred.emit($event);
+  }
 }

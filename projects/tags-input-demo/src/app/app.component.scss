@@ -1,0 +1,29 @@
+.main {
+  &__form {
+    width: 100%;
+    &__ti {
+      width: 100%;
+    }
+  }
+}
+
+.items-list {
+  &__item {
+    &__parent {
+      &--selected {
+        background: #dcdcdc;
+      }
+    }
+  }
+}
+
+.items-children-list__item__children {
+  margin-left: 16px;
+  &__child {
+    &--selected {
+      > .items-children-list__item__children__child__item {
+        background: #dcdcdc;
+      }
+    }
+  }
+}

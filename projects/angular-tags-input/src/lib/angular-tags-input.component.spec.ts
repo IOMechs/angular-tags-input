@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularTagsInputComponent } from './angular-tags-input.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { UnAddedTagsPipe } from './un-added-tags.pipe';
 
 describe('AngularTagsInputComponent', () => {
   let component: AngularTagsInputComponent;
@@ -11,7 +13,8 @@ describe('AngularTagsInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [OverlayModule, ReactiveFormsModule, FormsModule],
-      declarations: [ AngularTagsInputComponent ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [ AngularTagsInputComponent, UnAddedTagsPipe ]
     })
     .compileComponents();
   }));

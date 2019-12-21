@@ -32,7 +32,7 @@ export class UnAddedTagsPipe implements PipeTransform {
     for (let i = 0, len = tagsList.length; i < len; ++i) {
       const currentTagItem = {...tagsList[i]};  // making sure we're not modifying the original object here
       if (!this.isTagAlreadySelected(currentTagItem, tagsAdded, config)) { // if the tag to add isn't added already
-        currentTagItem.selected = false;
+        currentTagItem.tiSelected = false;
         if (config.nestedTagProperty && currentTagItem[config.nestedTagProperty]) {
           currentTagItem[config.nestedTagProperty] = currentTagItem[config.nestedTagProperty].filter((tagItem) => {
             return !this.isTagAlreadySelected(tagItem, tagsAdded, config);
@@ -85,16 +85,16 @@ export class UnAddedTagsPipe implements PipeTransform {
 
   setSelectedTags(tags, config: AngularTagsInputConfig, tagsAdded, isSelected = null) {
     return tags.map(currentTag => {
-      currentTag.selected = !!this.isTagAlreadySelected(currentTag, tagsAdded, config);
+      currentTag.tiSelected = !!this.isTagAlreadySelected(currentTag, tagsAdded, config);
       if (config.showTagsSelectedInDD && !!isSelected) {
-        currentTag.selected = true;
+        currentTag.tiSelected = true;
       }
       if (currentTag[config.nestedTagProperty] && currentTag[config.nestedTagProperty].length) {
         currentTag[config.nestedTagProperty] = this.setSelectedTags(
           currentTag[config.nestedTagProperty],
           config,
           tagsAdded,
-          currentTag.selected
+          currentTag.tiSelected
         );
       }
       return currentTag;

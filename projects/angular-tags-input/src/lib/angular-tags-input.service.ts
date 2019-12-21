@@ -5,7 +5,7 @@ import { AngularTagsInputConfig } from './tags-input-interfaces';
   providedIn: 'root'
 })
 export class AngularTagsInputService {
-
+  debugMode = false;
   constructor() { }
 
   /**
@@ -29,6 +29,17 @@ export class AngularTagsInputService {
         }
       }
     }
+  }
+
+  setDebugMode(mode: boolean) {
+    this.debugMode = mode;
+  }
+
+  log(logMessage: any, logLabel = '') {
+    if (!this.debugMode) {
+      return;
+    }
+    console.log(logLabel, logMessage);
   }
 
   findParent(tagsArray, tagItem, config: AngularTagsInputConfig) {
@@ -59,10 +70,10 @@ export class AngularTagsInputService {
       const parentTagChildren = parentTag[config.nestedTagProperty].length;
       const childrensSelected = parentTag[config.nestedTagProperty].filter((tagItem) => {
         // tslint:disable-next-line:triple-equals
-        return !!tagItem['selected'];
+        return !!tagItem.tiSelected;
       }).length;
       if (parentTagChildren > 0 && childrensSelected > 0 && childrensSelected === parentTagChildren) {
-        parentTag['selected'] = true;
+        parentTag.tiSelected = true;
         if (!parentTag[config.nestedTagParentProp]) {
           return parentTag;
         } else {

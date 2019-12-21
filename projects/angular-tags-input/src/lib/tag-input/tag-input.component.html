@@ -2,11 +2,13 @@
   <form no-validate [formGroup]="tagInputForm">
     <input
       #inputEl
+      [disabled]="disabled"
       (keyup.enter)="onEnterKeyPress()"
       [placeholder]="config?.placeholder"
       formControlName="tagInputVal"
+      (click)="emitInputFocused()"
       (focus)="emitInputFocused()"
-      (blur)="inputBlurred.emit()"
+      (blur)="emitInputBlurred($event)"
       class="angular-tag-input__input"
       autocomplete="off">
   </form>
