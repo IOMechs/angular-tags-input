@@ -70,7 +70,7 @@ export class DropdownComponent
     if (changes.listItems && !changes.listItems.firstChange) {
       // if the list items change, update the context items (because they're not automatically updated)
       this.filterItems(this.inputVal, changes.listItems.currentValue);
-      this.populateItemsMap(changes.listItems ? changes.listItems.currentValue || this.listItems);
+      this.populateItemsMap(changes.listItems ? changes.listItems.currentValue : this.listItems);
     }
 
     if (
@@ -78,7 +78,7 @@ export class DropdownComponent
     ) {
       // if the list items change, update the context items (because they're not automatically updated)
       this.filterItems(changes.inputVal.currentValue);
-      this.populateItemsMap(changes.listItems ? changes.listItems.currentValue || this.listItems);
+      this.populateItemsMap(changes.listItems ? changes.listItems.currentValue : this.listItems);
     }
   }
 
