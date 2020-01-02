@@ -1,6 +1,6 @@
 export const TAGS_DATA_NESTED = [{
   id: '1',
-  name: 'Ahsan',
+  name: 'Ahsan Ayaz',
   designation: 'Senior engineer',
   subOrdinatesCount: 3,
   subOrdinates: [{
@@ -14,20 +14,20 @@ export const TAGS_DATA_NESTED = [{
       id: '1.1.1',
       name: 'Some user 1',
       subOrdinatesCount: 0,
-      designation: 'Software engineer'
+      designation: 'Software engineer',
     }, {
       id: '1.1.2',
       parentId: '1.1',
       subOrdinatesCount: 0,
       name: 'Some user 2',
-      designation: 'Software engineer'
+      designation: 'Software engineer',
     }]
   }, {
     id: '1.2',
     parentId: '1',
     name: 'Asghar',
     subOrdinatesCount: 0,
-    designation: 'Software engineer'
+    designation: 'Software engineer',
   }]
 }, {
   id: '2',
@@ -45,13 +45,13 @@ export const TAGS_DATA_NESTED = [{
       id: '2.1.1',
       subOrdinatesCount: 0,
       name: 'Yawar',
-      designation: 'Software engineer'
+      designation: 'Software engineer',
     }, {
       parentId: '2.1',
       id: '2.1.2',
       name: 'Abbas',
       subOrdinatesCount: 0,
-      designation: 'Software engineer'
+      designation: 'Software engineer',
     }]
   }, {
     id: '2.2',
@@ -64,25 +64,25 @@ export const TAGS_DATA_NESTED = [{
       parentId: '2.2',
       name: 'Zainab',
       subOrdinatesCount: 0,
-      designation: 'Software engineer'
+      designation: 'Software engineer',
     }, {
       id: '2.2.2',
       parentId: '2.2',
       subOrdinatesCount: 0,
       name: 'Salim',
-      designation: 'Software engineer'
+      designation: 'Software engineer',
     }]
   }]
 }, {
   id: '3',
   name: 'Mohsin',
   subOrdinatesCount: 0,
-  designation: 'Software engineer'
+  designation: 'Software engineer',
 }, {
   id: '4',
   name: 'Siraj',
   subOrdinatesCount: 0,
-  designation: 'Senior engineer'
+  designation: 'Senior engineer',
 }];
 
 export const TAGS_DATA_SIMPLE = [
@@ -102,4 +102,22 @@ export const TAGS_DATA_SIMPLE = [
     Id: 253,
     full_name: 'Dexter\'s Lab',
   },
+];
+
+export const TAGS_DATA_IMAGES = [
+  {
+    Id: 72,
+    full_name: 'Anonymous Person',
+    image_url: 'https://user-images.githubusercontent.com/462213/65887262-f1f13c00-e39d-11e9-9846-1019b8f4d3bb.jpg',
+  },
+  {
+    Id: 320,
+    full_name: 'data 2',
+    image_url: 'https://user-images.githubusercontent.com/462213/65887262-f1f13c00-e39d-11e9-9846-1019b8f4d3bb.jpg',
+  },
+  {
+    Id: 259,
+    full_name: 'Devil',
+    image_url: 'https://user-images.githubusercontent.com/462213/65887262-f1f13c00-e39d-11e9-9846-1019b8f4d3bb.jpg',
+  }
 ];

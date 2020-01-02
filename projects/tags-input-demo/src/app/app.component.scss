@@ -1,6 +1,9 @@
 .main {
   &__form {
     width: 100%;
+    &__tt {
+    align-self: center;
+  }
     &__ti {
       width: 100%;
     }
