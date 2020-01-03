@@ -51,19 +51,15 @@ export class AppComponent {
   };
 
 
-  ImageTagsInputConfig: AngularTagsInputConfig = {
+  imageTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
     hideAddedTags: false,
     hideDDOnBlur: true,
-    nestedTagProperty: 'subOrdinates',
     onlyFromAutoComplete: true,
     additionalClasses: 'ti-tags-input',
     displayProperty: 'full_name',
     identifier: 'Id',
-    toggleSelectionOnClick: true,
-    nestedTagParentProp: 'parent_id',
     clearInputOnFocus: true,
-    showParentTagsOnly: true,
     hideTags: true,
     ddHasBackdrop: false
   };
@@ -79,6 +75,6 @@ export class AppComponent {
   }
 
   onTagAdded($event) {
-    console.log(this.simpleForm.value);
+    // console.log(this.simpleForm.value);
   }
 }
