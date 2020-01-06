@@ -304,6 +304,8 @@
 
   <div class="content" role="main">
     <form [formGroup]="simpleForm" class="main__form">
+      <div>
+        <h3 class="main__form__tt">Nested Dropdown</h3>
       <ti-angular-tags-input formControlName="users" class="main__form__ti"
         [tagsData]="sampleDataNested"
         (tagAdded)="onTagAdded($event)"
@@ -312,6 +314,9 @@
         [dropDownTemplate]="ddNestedTemplate"
         >
       </ti-angular-tags-input>
+      </div>
+      <div>
+        <h3 class="main__form__tt">Simple Dropdown</h3>
       <ti-angular-tags-input formControlName="users" class="main__form__ti"
         [tagsData]="sampleDataSimple"
         (tagAdded)="onTagAdded($event)"
@@ -319,8 +324,30 @@
         [config]="simpleTagsInputConfig"
         >
       </ti-angular-tags-input>
+      </div>
+      <div>
+      <h3 class="main__form__tt">Image Dropdown</h3>
+      <ti-angular-tags-input formControlName="users" class="main__form__ti"
+      [tagsData]="sampleDataImage"
+      (tagAdded)="onTagAdded($event)"
+      (valueChanged)="onValChanged($event)"
+      [config]="ImageTagsInputConfig"
+      [dropDownTemplate]="userTagItemTemplate"
+      >
+    </ti-angular-tags-input>
+    </div>
     </form>
   </div>
+  <ng-template #userTagItemTemplate let-config="config">
+  <div class="users-list">
+    <tid-users-list-item
+      *ngFor="let item of sampleDataImage"
+      [item]="item"
+      [config]="config">
+
+    </tid-users-list-item>
+  </div>
+</ng-template>
   <!-- Footer -->
   <footer>
     Love Angular?&nbsp;

@@ -103,3 +103,21 @@ export const TAGS_DATA_SIMPLE = [
     full_name: 'Dexter\'s Lab',
   },
 ];
+
+export const TAGS_DATA_IMAGES = [
+  {
+    Id: 72,
+    full_name: 'Anonymous Person',
+    image_url: 'https://user-images.githubusercontent.com/462213/65887262-f1f13c00-e39d-11e9-9846-1019b8f4d3bb.jpg',
+  },
+  {
+    Id: 320,
+    full_name: 'data 2',
+    image_url: 'https://user-images.githubusercontent.com/462213/65887262-f1f13c00-e39d-11e9-9846-1019b8f4d3bb.jpg',
+  },
+  {
+    Id: 259,
+    full_name: 'Devil',
+    image_url: 'https://user-images.githubusercontent.com/462213/65887262-f1f13c00-e39d-11e9-9846-1019b8f4d3bb.jpg',
+  }
+];
