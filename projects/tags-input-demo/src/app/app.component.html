@@ -304,7 +304,7 @@
 
   <div class="content" role="main">
     <form [formGroup]="simpleForm" class="main__form">
-      <ti-angular-tags-input formControlName="users" class="main__form__ti"
+      <ti-angular-tags-input formControlName="nestedData" class="main__form__ti"
         [tagsData]="sampleDataNested"
         (tagAdded)="onTagAdded($event)"
         (valueChanged)="onValChanged($event)"
@@ -312,13 +312,17 @@
         [dropDownTemplate]="ddNestedTemplate"
         >
       </ti-angular-tags-input>
-      <ti-angular-tags-input formControlName="users" class="main__form__ti"
+      <ti-angular-tags-input formControlName="simpleData" class="main__form__ti"
         [tagsData]="sampleDataSimple"
         (tagAdded)="onTagAdded($event)"
         (valueChanged)="onValChanged($event)"
         [config]="simpleTagsInputConfig"
+        required="true"
         >
       </ti-angular-tags-input>
+      <div class="main__form__error" *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
+        Value for simple data is required
+      </div>
     </form>
   </div>
   <!-- Footer -->

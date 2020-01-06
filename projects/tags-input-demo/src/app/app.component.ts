@@ -51,7 +51,8 @@ export class AppComponent {
 
   constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
     this.simpleForm = this.fb.group({
-      users: [[], []]
+      simpleData: [[], []],
+      nestedData: [[], []]
     });
     this.tagsInputService.setDebugMode(true);
   }
