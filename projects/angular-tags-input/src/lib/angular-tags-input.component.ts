@@ -14,7 +14,7 @@ import {
   ViewEncapsulation,
   HostListener,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl } from '@angular/forms';
 
 import { AngularTagsInputService } from './angular-tags-input.service';
 import { TagInputComponent } from './tag-input/tag-input.component';
@@ -28,11 +28,12 @@ import { KEY_CODES } from './constants';
   templateUrl: './angular-tags-input.component.html',
   styleUrls: ['./angular-tags-input.component.scss'],
   providers: [
-    getAngularTagsInputValueAccessor()
+    getAngularTagsInputValueAccessor(),
+    getAngularTagsInputValidatorsProvider()
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class AngularTagsInputComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges {
+export class AngularTagsInputComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges, Validator {
   @ViewChild(DropdownComponent, { static: false }) dropdown: DropdownComponent;
   @Input() config: AngularTagsInputConfig;
   @Input() tagsData: Array<any> = [];
@@ -40,6 +41,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   @Input() tagsLoading: boolean;
   @Input() dropDownTemplate: TemplateRef<any> = null;
   @Input() tagItemTemplate: TemplateRef<any> = null;
+  @Input() required = false;
   @Output() tagRemoved = new EventEmitter();
   @Output() tagAdded = new EventEmitter();
   @Output() valueChanged = new EventEmitter();
@@ -179,6 +181,20 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    */
   registerOnChange( fn: any ): void {
     this.onChange = fn;
+  }
+
+  /**
+   * Validator function for the form control
+   * Doesn't do anything if the control is not required
+   * If it is required, checks if the control contains value
+   */
+  validate(control: FormControl) {
+    if (this.required === false) {
+      return null;
+    }
+    return (!!control.value && control.value.length) ? null : {
+      required: true,
+    };
   }
 
   /**
@@ -459,6 +475,14 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
 export function getAngularTagsInputValueAccessor() {
   return {
     provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AngularTagsInputComponent),
+    multi: true,
+  };
+}
+
+export function getAngularTagsInputValidatorsProvider() {
+  return {
+    provide: NG_VALIDATORS,
     useExisting: forwardRef(() => AngularTagsInputComponent),
     multi: true,
   };

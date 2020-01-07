@@ -301,12 +301,9 @@
     src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
   <span>Welcome</span>
 </div>
-
   <div class="content" role="main">
     <form [formGroup]="simpleForm" class="main__form">
-      <div>
-        <h3 class="main__form__tt">Nested Dropdown</h3>
-      <ti-angular-tags-input formControlName="users" class="main__form__ti"
+      <ti-angular-tags-input formControlName="nestedData" class="main__form__ti"
         [tagsData]="sampleDataNested"
         (tagAdded)="onTagAdded($event)"
         (valueChanged)="onValChanged($event)"
@@ -314,37 +311,35 @@
         [dropDownTemplate]="ddNestedTemplate"
         >
       </ti-angular-tags-input>
-      </div>
-      <div>
-        <h3 class="main__form__tt">Simple Dropdown</h3>
-      <ti-angular-tags-input formControlName="users" class="main__form__ti"
+      <ti-angular-tags-input formControlName="simpleData" class="main__form__ti"
         [tagsData]="sampleDataSimple"
         (tagAdded)="onTagAdded($event)"
         (valueChanged)="onValChanged($event)"
         [config]="simpleTagsInputConfig"
+        [dropDownTemplate]="ddNestedTemplate"
+        required="true"
         >
       </ti-angular-tags-input>
+      <ti-angular-tags-input formControlName="imageData" class="main__form__ti"
+        [tagsData]="sampleDataImage"
+        (tagAdded)="onTagAdded($event)"
+        (valueChanged)="onValChanged($event)"
+        [config]="imageTagsInputConfig"
+        [dropDownTemplate]="imageDropdownTemplate"
+        >
+      </ti-angular-tags-input>
+      <div class="main__form__error" *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
+        Value for simple data is required
       </div>
-      <div>
-      <h3 class="main__form__tt">Image Dropdown</h3>
-      <ti-angular-tags-input formControlName="users" class="main__form__ti"
-      [tagsData]="sampleDataImage"
-      (tagAdded)="onTagAdded($event)"
-      (valueChanged)="onValChanged($event)"
-      [config]="ImageTagsInputConfig"
-      [dropDownTemplate]="userTagItemTemplate"
-      >
-    </ti-angular-tags-input>
-    </div>
     </form>
   </div>
-  <ng-template #userTagItemTemplate let-config="config">
+  <ng-template #imageDropdownTemplate let-items="items" let-config="config" >
   <div class="users-list">
     <tid-users-list-item
-      *ngFor="let item of sampleDataImage"
-      [item]="item"
-      [config]="config">
-
+      *ngFor="let data of items"
+      [item]="data"
+      [config]="config"
+      >
     </tid-users-list-item>
   </div>
 </ng-template>

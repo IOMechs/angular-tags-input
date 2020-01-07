@@ -8,7 +8,9 @@
     "build:lib": "ng build angular-tags-input",
     "test": "ng test",
     "lint": "ng lint",
-    "publish:lib": "npm run build:lib && cd ./dist/angular-tags-input && npm publish --access public",
+    "copy:readme": "cp ./README.md ./projects/angular-tags-input/",
+    "copy:license": "cp ./LICENSE ./projects/angular-tags-input/",
+    "release": "npm run copy:readme && npm run build:lib && cd ./dist/angular-tags-input && npm publish --access public",
     "e2e": "ng e2e"
   },
   "private": true,

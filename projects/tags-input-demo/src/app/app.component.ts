@@ -51,17 +51,14 @@ export class AppComponent {
   };
 
 
-  ImageTagsInputConfig: AngularTagsInputConfig = {
+  imageTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
     hideAddedTags: false,
     hideDDOnBlur: true,
-    nestedTagProperty: 'subOrdinates',
     onlyFromAutoComplete: true,
     additionalClasses: 'ti-tags-input',
     displayProperty: 'full_name',
     identifier: 'Id',
-    toggleSelectionOnClick: true,
-    nestedTagParentProp: 'parent_id',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: true,
@@ -70,7 +67,9 @@ export class AppComponent {
 
   constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
     this.simpleForm = this.fb.group({
-      users: [[], []]
+      simpleData: [[], []],
+      nestedData: [[], []],
+      imageData: [[], []],
     });
     this.tagsInputService.setDebugMode(true);
   }
