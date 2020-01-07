@@ -1,3 +1,4 @@
+@import "./styles.scss";
 .main {
   &__form {
     width: 100%;
@@ -5,7 +6,7 @@
       width: 100%;
     }
     &__error {
-      color: red;
+      color: $red;
       margin-top: 10px;
     }
   }
@@ -15,7 +16,7 @@
   &__item {
     &__parent {
       &--selected {
-        background: #dcdcdc;
+        background: $white;
       }
     }
   }
@@ -26,7 +27,7 @@
   &__child {
     &--selected {
       > .items-children-list__item__children__child__item {
-        background: #dcdcdc;
+        background: $white;
       }
     }
   }
@@ -35,8 +36,8 @@
 .users-list {
   padding: 8px 0;
   width: 100%;
-  box-shadow: grey;
-  background: white;
+  box-shadow: $grey;
+  background: $white;
   overflow: auto;
 }
   
