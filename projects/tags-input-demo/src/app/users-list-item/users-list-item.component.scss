@@ -1,0 +1,29 @@
+@import "../styles/variables";
+
+.item {
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: all ease 0.5s;
+  display: flex;
+  align-items: center;
+  &:hover {
+    background: $hover;
+  }
+  &__avatar {
+    margin-right: 16px;
+    font-size: 10px;
+    &__image {
+      border-radius: 50%;
+      height: 30px;
+      width: 30px;
+      background-color: $grey;
+    }
+  }
+  &__info {
+    flex: 1;
+    &__name {
+      color: $grey;
+      font-weight: bold;
+    }
+  }
+}

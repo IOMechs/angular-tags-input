@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularTagsInputConfig, AngularTagsInputService } from 'projects/angular-tags-input/src/public-api';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TAGS_DATA_NESTED, TAGS_DATA_SIMPLE } from './data';
+import { TAGS_DATA_NESTED, TAGS_DATA_SIMPLE, TAGS_DATA_IMAGES } from './data';
 
 @Component({
   selector: 'tid-root',
@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'tags-input-demo';
   sampleDataNested = TAGS_DATA_NESTED;
   sampleDataSimple = TAGS_DATA_SIMPLE;
+  sampleDataImage = TAGS_DATA_IMAGES;
 
   nestedTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
@@ -49,10 +50,26 @@ export class AppComponent {
     ddHasBackdrop: false
   };
 
+
+  imageTagsInputConfig: AngularTagsInputConfig = {
+    showTagsSelectedInDD: true,
+    hideAddedTags: false,
+    hideDDOnBlur: true,
+    onlyFromAutoComplete: true,
+    additionalClasses: 'ti-tags-input',
+    displayProperty: 'full_name',
+    identifier: 'Id',
+    clearInputOnFocus: true,
+    showParentTagsOnly: true,
+    hideTags: true,
+    ddHasBackdrop: false
+  };
+
   constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
     this.simpleForm = this.fb.group({
       simpleData: [[], []],
-      nestedData: [[], []]
+      nestedData: [[], []],
+      imageData: [[], []],
     });
     this.tagsInputService.setDebugMode(true);
   }
