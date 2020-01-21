@@ -465,7 +465,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     }
     // so we have the dropdown shown
     setTimeout(() => {
-      this.dropdown.handleKeyUp($event);
+      if (this.dropdown) {
+        this.dropdown.handleKeyUp($event);
+      }
     }, 10);
   }
 
