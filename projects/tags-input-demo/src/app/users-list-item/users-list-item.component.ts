@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'tid-users-list-item',
@@ -9,10 +9,13 @@ export class UsersListItemComponent implements OnInit {
 
   @Input() item;
   @Input() config;
+  @Output() itemClicked = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
   }
-
+  onItemClicked(data: any) {
+    this.itemClicked.emit(data);
+  }
 }

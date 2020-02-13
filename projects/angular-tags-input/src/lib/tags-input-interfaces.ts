@@ -21,6 +21,7 @@ export interface AngularTagsInputConfig {
   dropdownClass?: string;
   showParentTagsOnly?: boolean;
   hideDDOnBlur?: boolean;
+  hideTickMark?: boolean;
 }
 
 export interface AngularTagsInputDDFns {
