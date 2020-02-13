@@ -3,8 +3,11 @@
     .default & {
       padding: 6px 10px;
       border: none;
-      width: 100%;
+      width: 98%;
       min-width: 100px;
     }
+  }
+  input:focus {
+    outline-width: 0;
   }
 }

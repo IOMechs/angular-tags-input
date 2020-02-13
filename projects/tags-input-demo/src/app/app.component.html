@@ -39,9 +39,10 @@
     margin: -8px;
     display: flex;
     align-items: center;
-    background-color: #1976d2;
-    color: white;
+    background-color: rgb(255, 255, 255);
+    color: #344960;
     font-weight: 600;
+    border-bottom: 1px solid #eee;
   }
 
   .toolbar img {
@@ -107,7 +108,7 @@
   }
 
   .card.card-small {
-    height: 16px;
+    height: 10px;
     width: 168px;
   }
 
@@ -125,17 +126,13 @@
   }
 
   .card.highlight-card {
-    background-color: #1976d2;
+    background-color: #344960;
     color: white;
     font-weight: 600;
     border: none;
     width: auto;
     min-width: 30%;
     position: relative;
-  }
-
-  .card.card.highlight-card span {
-    margin-left: 60px;
   }
 
   svg#rocket {
@@ -153,10 +150,8 @@
     z-index: -10;
   }
 
-  a,
-  a:visited,
-  a:hover {
-    color: #1976d2;
+  a {
+    color: #344960;
     text-decoration: none;
   }
 
@@ -222,6 +217,7 @@
     display: flex;
     align-items: center;
     line-height: 20px;
+    justify-content: center;
   }
 
   footer a {
@@ -285,6 +281,11 @@
       right: 120px;
       transform: rotate(-5deg);
     }
+    .like-content .chevron-icon,
+    .like-content .main-link span,
+    .like-content .like-content-text {
+      display: none;
+    }
   }
 
   @media screen and (max-width: 575px) {
@@ -293,80 +294,109 @@
       visibility: hidden;
     }
   }
+
+  .like-content {
+    display: flex;
+    padding-right: 40px;
+  }
+  .toolbar .like-content .main-link {
+    display: flex;
+  }
 </style>
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <img width="40" alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
-  <span>Welcome</span>
-</div>
-  <div class="content" role="main">
-    <form [formGroup]="simpleForm" class="main__form">
-      <ti-angular-tags-input formControlName="nestedData" class="main__form__ti"
-        [tagsData]="sampleDataNested"
-        (tagAdded)="onTagAdded($event)"
-        (valueChanged)="onValChanged($event)"
-        [config]="nestedTagsInputConfig"
-        [dropDownTemplate]="ddNestedTemplate"
-        >
-      </ti-angular-tags-input>
-      <ti-angular-tags-input formControlName="simpleData" class="main__form__ti"
-        [tagsData]="sampleDataSimple"
-        (tagAdded)="onTagAdded($event)"
-        (valueChanged)="onValChanged($event)"
-        [config]="simpleTagsInputConfig"
-        [dropDownTemplate]="ddNestedTemplate"
-        required="true"
-        >
-      </ti-angular-tags-input>
-      <ti-angular-tags-input formControlName="imageData" class="main__form__ti"
-        [tagsData]="sampleDataImage"
-        (tagAdded)="onTagAdded($event)"
-        (valueChanged)="onValChanged($event)"
-        [config]="imageTagsInputConfig"
-        [dropDownTemplate]="imageDropdownTemplate"
-        >
-      </ti-angular-tags-input>
-      <div class="main__form__error" *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
-        Value for simple data is required
-      </div>
-    </form>
-  </div>
-  <ng-template #imageDropdownTemplate let-items="items" let-config="config" >
-  <div class="users-list">
-    <tid-users-list-item
-      *ngFor="let data of items"
-      [item]="data"
-      [config]="config"
-      >
-    </tid-users-list-item>
-  </div>
-</ng-template>
-  <!-- Footer -->
-  <footer>
-    Love Angular?&nbsp;
-    <a href="https://github.com/angular/angular" target="_blank" rel="noopener"> Give our repo a star.
+  <img width="120" alt="IOMechs Logo" src="../assets/iomechs-logo.png" />
+  <span>Angular Tags Input</span>
+  <div class="spacer"></div>
+  <div class="like-content">
+    <span class="like-content-text">Like Angular Tag Input?&nbsp;</span>
+    <a class="main-link" href="https://github.com/IOMechs/angular-tags-input" target="_blank" rel="noopener">
+      <span>Give our repo a star.</span>
       <div class="github-star-badge">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M0 0h24v24H0z" fill="none" />
-          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
         Star
       </div>
     </a>
-    <a href="https://github.com/angular/angular" target="_blank" rel="noopener">
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2" />
-        <path d="M0 0h24v24H0z" fill="none" /></svg>
+    <a class="chevron-icon" href="https://github.com/IOMechs/angular-tags-input" target="_blank" rel="noopener">
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#344960"/><path d="M0 0h24v24H0z" fill="none"/></svg>
     </a>
-  </footer>
+  </div>
+</div>
+<div class="content" role="main">
+  <!-- Highlight Card -->
+  <div class="card highlight-card card-small">
+    <span>@iomechs/angular-tags-input</span>
+  </div>
+  <!-- Main -->
+  <h1>Angular Tags Input</h1>
+  <br>
 
-  <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677"
-    viewBox="0 0 2611.084 485.677">
-    <path id="Path_39" data-name="Path 39"
-      d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z"
-      transform="translate(142.69 -634.312)" fill="#eee" />
-  </svg>
+  <form [formGroup]="simpleForm" class="main__form">
+    <h5 class="main__form__heading">1. Input with subtypes and selected items are marked as tick</h5>
+    <ti-angular-tags-input formControlName="nestedData" class="main__form__ti" [tagsData]="sampleDataNested"
+    (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="nestedTagsInputConfig"
+    [dropDownTemplate]="ddNestedTemplate">
+  </ti-angular-tags-input>
+
+    <h5 class="main__form__heading">2. Selected items will be hide from options list</h5>
+    <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="sampleDataSimple"
+      (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="simpleTagsInputConfig"
+      [dropDownTemplate]="ddNestedTemplate" required="true">
+    </ti-angular-tags-input>
+
+    <h5 class="main__form__heading">3. Options to hide tick and items from list.</h5>
+    <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="sampleDataSimple"
+      (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="simpleTagsInputConfig2"
+      [dropDownTemplate]="ddNestedTemplate" required="true">
+    </ti-angular-tags-input>
+
+    <input type="checkbox" name="tick mark" [checked]="simpleTagsInputConfig2.hideTickMark" (change)="changeTickOption($event)">
+    <label for="tick mark">Hide tick</label> &nbsp; &nbsp;
+
+    <input type="checkbox" name="tags added" [checked]="simpleTagsInputConfig2.hideAddedTags" (change)="changeItemShowingOption($event)">
+    <label for="tags added">Hide items</label>
+
+    <div class="main__form__error"
+      *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
+      Value for simple data is required
+    </div>
+
+    <h5 class="main__form__heading">4. Options with image and items are not marked as tick</h5>
+    <ti-angular-tags-input formControlName="imageData" class="main__form__ti" [tagsData]="sampleDataImage"
+      (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="imageTagsInputConfig"
+      [dropDownTemplate]="imageDropdownTemplate">
+    </ti-angular-tags-input>
+  </form>
+</div>
+<ng-template #imageDropdownTemplate let-items="items" let-config="config" let-fns="fns">
+  <div class="users-list">
+    <tid-users-list-item *ngFor="let data of items" [item]="data" [config]="config" (itemClicked)="fns.onItemClicked($event)">
+    </tid-users-list-item>
+  </div>
+</ng-template>
+<!-- Footer -->
+<footer>
+  Love Angular Tags Input?&nbsp;
+  <a href="https://github.com/angular/angular" target="_blank" rel="noopener"> Give our repo a star.
+    <div class="github-star-badge">
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
+      Star
+    </div>
+  </a>
+  <a class="chevron-icon" href="https://github.com/IOMechs/angular-tags-input" target="_blank" rel="noopener">
+    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#344960"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+  </a>
+</footer>
+
+<svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677"
+  viewBox="0 0 2611.084 485.677">
+  <path id="Path_39" data-name="Path 39"
+    d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z"
+    transform="translate(142.69 -634.312)" fill="#eee" />
+</svg>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
@@ -382,15 +412,15 @@
 
 
 <ng-template #ddNestedTemplate let-items="items" let-config="config" let-fns="fns">
-  <div class="items-list" style="max-height: 250px; overflow-y: auto;">
+  <div class="items-list" style="max-height: 250px; overflow-y: auto;padding-top: 8px;">
     <div class="items-list__item" *ngFor="let item of items">
-      <div
-        tiKeyboardActiveClass="items-list__item__parent--selected"
-        [isKeyboardActiveItem]="item.tiKeyboardActive"
-        class="items-list__item__parent"
-        (click)="fns.onItemClicked(item)">
+      <div tiKeyboardActiveClass="items-list__item__parent--selected" [isKeyboardActiveItem]="item.tiKeyboardActive"
+        class="items-list__item__parent" (click)="fns.onItemClicked(item)">
         <div class="items-list__item__parent__text">
           {{item[config.displayProperty]}}
+        </div>
+        <div *ngIf="item.tiSelected && !config.hideTickMark">
+          <img src="../assets/tick.png" alt="tick" width="14">
         </div>
       </div>
       <ng-container
@@ -403,14 +433,15 @@
 <ng-template #ddNestedChildrenTemplate let-items="items" let-fns="fns" let-config="config">
   <div class="items-children-list__item__children">
     <ng-container *ngFor="let item of items">
-      <div
-        tiKeyboardActiveClass="items-children-list__item__children__child--selected"
-        [isKeyboardActiveItem]="item.tiKeyboardActive"
-        class="items-children-list__item__children__child"
+      <div tiKeyboardActiveClass="items-children-list__item__children__child--selected"
+        [isKeyboardActiveItem]="item.tiKeyboardActive" class="items-children-list__item__children__child"
         (click)="fns.onItemClicked(item, $event)">
         <div class="items-children-list__item__children__child__item">
           <div class="items-children-list__item__children__child__item__text">
             {{item[config.displayProperty]}}
+          </div>
+          <div *ngIf="item.tiSelected && !config.hideTickMark">
+            <img src="../assets/tick.png" alt="tick" width="14">
           </div>
         </div>
         <ng-container

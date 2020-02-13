@@ -2,7 +2,8 @@
   class="angular-tags-input"
   [ngClass]="config.defaultClass + ' ' + config.additionalClasses">
   <div class="angular-tags-input__inp-container" #dropdownTrigger="cdkOverlayOrigin" cdkOverlayOrigin>
-    <ng-container *ngIf="!config.hideTags">
+    <!-- <ng-container *ngIf="!config.hideTags"> -->
+    <ng-container>
       <ti-tag
         class="angular-tags-input__inp-container__tag"
         *ngFor="let tagItem of tags"
@@ -24,6 +25,7 @@
       (inputKeyPress)="inputKeyPress($event)">
     </ti-tag-input>
   </div>
+  
   <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="dropdownTrigger" [cdkConnectedOverlayOpen]="isDropdownOpen"
     [cdkConnectedOverlayHasBackdrop]="config.ddHasBackdrop" (backdropClick)="hideDropdown()"
     [cdkConnectedOverlayPanelClass]="'angular-tags-input-dd-overlay' + config.dropdownClass ? config.dropdownClass : ''"

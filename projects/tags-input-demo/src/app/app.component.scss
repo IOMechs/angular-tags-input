@@ -2,6 +2,11 @@
 .main {
   &__form {
     width: 100%;
+    &__heading {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 17px 0px;
+    }
     &__ti {
       width: 100%;
     }
@@ -14,10 +19,29 @@
 
 .items-list {
   &__item {
+    padding: 05px 8px;
+    &:not(:last-child) {
+      border-bottom: 1px solid #f0f0f4;
+    }
     &__parent {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      padding-right: 6px;
+      justify-content: space-between;
       &--selected {
         background: $white;
       }
+      &__text{
+        font-size: 17px;
+        font-family: sans-serif;
+      }
+    }
+    &__parent:hover {
+      background: #445cb4;
+      color: #fff;
+      cursor: pointer;
     }
   }
 }
@@ -28,6 +52,23 @@
     &--selected {
       > .items-children-list__item__children__child__item {
         background: $white;
+      }
+    }
+    &__item:hover {
+      background: #445cb4;
+      color: #fff;
+      cursor: pointer;
+    }
+    &__item {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding-left: 5px;
+      padding-right: 5px;
+      justify-content: space-between;
+      &__text{
+        font-size: 16px;
+        font-family: sans-serif;
       }
     }
   }

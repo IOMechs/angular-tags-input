@@ -35,7 +35,7 @@ export class AppComponent {
 
   simpleTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
-    hideAddedTags: false,
+    hideAddedTags: true,
     hideDDOnBlur: true,
     nestedTagProperty: 'subOrdinates',
     onlyFromAutoComplete: true,
@@ -47,7 +47,26 @@ export class AppComponent {
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: true,
-    ddHasBackdrop: false
+    ddHasBackdrop: false,
+  };
+
+  simpleTagsInputConfig2: AngularTagsInputConfig = {
+    showTagsSelectedInDD: true,
+    hideAddedTags: false,
+    hideDDOnBlur: true,
+    placeholder: 'Search',
+    nestedTagProperty: 'subOrdinates',
+    onlyFromAutoComplete: true,
+    additionalClasses: 'ti-tags-input',
+    displayProperty: 'full_name',
+    identifier: 'Id',
+    toggleSelectionOnClick: true,
+    nestedTagParentProp: 'parent_id',
+    clearInputOnFocus: true,
+    showParentTagsOnly: true,
+    hideTags: true,
+    ddHasBackdrop: false,
+    hideTickMark: false
   };
 
 
@@ -79,5 +98,18 @@ export class AppComponent {
 
   onTagAdded($event) {
     console.log(this.simpleForm.value);
+  }
+
+  changeTickOption(event: any) {
+    this.simpleTagsInputConfig2 = {
+      ...this.simpleTagsInputConfig2,
+      hideTickMark: event.target.checked, 
+    };
+  }
+  changeItemShowingOption(event: any) {
+    this.simpleTagsInputConfig2 = {
+      ...this.simpleTagsInputConfig2,
+      hideAddedTags: event.target.checked
+    }
   }
 }
