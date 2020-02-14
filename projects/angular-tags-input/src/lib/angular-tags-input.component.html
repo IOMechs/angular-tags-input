@@ -2,8 +2,7 @@
   class="angular-tags-input"
   [ngClass]="config.defaultClass + ' ' + config.additionalClasses">
   <div class="angular-tags-input__inp-container" #dropdownTrigger="cdkOverlayOrigin" cdkOverlayOrigin>
-    <!-- <ng-container *ngIf="!config.hideTags"> -->
-    <ng-container>
+    <ng-container *ngIf="!config.hideTags">
       <ti-tag
         class="angular-tags-input__inp-container__tag"
         *ngFor="let tagItem of tags"

@@ -29,7 +29,7 @@ export class AppComponent {
     nestedTagParentProp: 'parentId',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
-    hideTags: true,
+    hideTags: false,
     ddHasBackdrop: true
   };
 
@@ -46,7 +46,7 @@ export class AppComponent {
     nestedTagParentProp: 'parent_id',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
-    hideTags: true,
+    hideTags: false,
     ddHasBackdrop: false,
   };
 
@@ -64,7 +64,7 @@ export class AppComponent {
     nestedTagParentProp: 'parent_id',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
-    hideTags: true,
+    hideTags: false,
     ddHasBackdrop: false,
     hideTickMark: false
   };
@@ -80,7 +80,7 @@ export class AppComponent {
     identifier: 'Id',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
-    hideTags: true,
+    hideTags: false,
     ddHasBackdrop: false
   };
 

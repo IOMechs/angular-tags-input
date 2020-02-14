@@ -355,7 +355,13 @@
     <label for="tick mark">Hide tick</label> &nbsp; &nbsp;
 
     <input type="checkbox" name="tags added" [checked]="simpleTagsInputConfig2.hideAddedTags" (change)="changeConfigOption($event, 'hideAddedTags')">
-    <label for="tags added">Hide items</label>
+    <label for="tags added">Hide items</label> &nbsp; &nbsp;
+    
+    <input type="checkbox" name="hide tags" [checked]="simpleTagsInputConfig2.hideTags" (change)="changeConfigOption($event, 'hideTags')">
+    <label for="hide tags">Hide tags</label> &nbsp; &nbsp;
+
+    <input type="checkbox" name="selected item" [checked]="simpleTagsInputConfig2.toggleSelectionOnClick" (change)="changeConfigOption($event, 'toggleSelectionOnClick')">
+    <label for="selected item">Remove on click selected item</label>
 
     <div class="main__form__error"
       *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
