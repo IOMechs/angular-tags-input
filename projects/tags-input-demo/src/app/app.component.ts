@@ -93,6 +93,7 @@ export class AppComponent {
     this.tagsInputService.setDebugMode(true);
   }
 
+
   onValChanged($event) {
   }
 
@@ -100,16 +101,10 @@ export class AppComponent {
     console.log(this.simpleForm.value);
   }
 
-  changeTickOption(event: any) {
+  changeConfigOption(event: any, option) {
     this.simpleTagsInputConfig2 = {
       ...this.simpleTagsInputConfig2,
-      hideTickMark: event.target.checked, 
+      [option]: event.target.checked, 
     };
-  }
-  changeItemShowingOption(event: any) {
-    this.simpleTagsInputConfig2 = {
-      ...this.simpleTagsInputConfig2,
-      hideAddedTags: event.target.checked
-    }
   }
 }
