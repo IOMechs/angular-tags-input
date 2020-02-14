@@ -345,7 +345,6 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     this.tagInput.resetInput();
     this.itemClicked.emit(tag);
     this.hideDropdown();
-    console.log('config', this.config);
   }
 
   /**

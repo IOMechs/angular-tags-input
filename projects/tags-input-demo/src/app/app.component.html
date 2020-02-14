@@ -351,10 +351,10 @@
       [dropDownTemplate]="ddNestedTemplate" required="true">
     </ti-angular-tags-input>
 
-    <input type="checkbox" name="tick mark" [checked]="simpleTagsInputConfig2.hideTickMark" (change)="changeTickOption($event)">
+    <input type="checkbox" name="tick mark" [checked]="simpleTagsInputConfig2.hideTickMark" (change)="changeConfigOption($event, 'hideTickMark')">
     <label for="tick mark">Hide tick</label> &nbsp; &nbsp;
 
-    <input type="checkbox" name="tags added" [checked]="simpleTagsInputConfig2.hideAddedTags" (change)="changeItemShowingOption($event)">
+    <input type="checkbox" name="tags added" [checked]="simpleTagsInputConfig2.hideAddedTags" (change)="changeConfigOption($event, 'hideAddedTags')">
     <label for="tags added">Hide items</label>
 
     <div class="main__form__error"
