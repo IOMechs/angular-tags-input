@@ -81,4 +81,14 @@
   background: $white;
   overflow: auto;
 }
+
+ti-angular-tags-input ::ng-deep .ti-tags-input {
+  border: 1px solid #e8ecef;
+  border-radius: 7px;
+  margin-bottom: 12px;
+  min-height: 42px;
+  padding-bottom: 5px;
+  padding-right: 12px;
+}
+
   

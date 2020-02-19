@@ -1,7 +1,6 @@
 ti-angular-tags-input {
   display: block;
   width: 100%;
-  margin-bottom: 25px;
 }
 .angular-tags-input {
   display: flex;
@@ -18,10 +17,9 @@ ti-angular-tags-input {
     padding: 8px 10px;
     position: relative;
     top: 4px;
-    border: 1px solid #e8ecef;
-    border-radius: 7px;
     &__tag-input {
       flex: 1;
+      margin-bottom: 8px;
     }
 
     &__tag {

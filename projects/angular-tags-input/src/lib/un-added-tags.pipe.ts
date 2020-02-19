@@ -77,7 +77,7 @@ export class UnAddedTagsPipe implements PipeTransform {
     if (typeof tagItem[config.identifier] === 'number') {
       // handling if the type of identifier is a number
       return tagItem[config.identifier] === +currentTag[config.identifier];
-    } else if (typeof tagItem[config.identifier] === 'string') {
+    } else if (typeof tagItem[config.identifier] === 'string' && typeof currentTag[config.identifier] === 'string') {
       // handling if the type of identifier is a string
       return tagItem[config.identifier].toLowerCase() === currentTag[config.identifier].toLowerCase();
     }
