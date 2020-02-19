@@ -9,7 +9,7 @@
             {{item.full_name}}
         </div>
     </div>
-    <div *ngIf="item.tiSelected && !config.hideTickMark">
+    <div *ngIf="item.tiSelected && config.showTagsSelectedInDD">
         <img src="../assets/tick.png" alt="tick" width="14">
     </div>
 </div>

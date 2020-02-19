@@ -334,24 +334,39 @@
 
   <form [formGroup]="simpleForm" class="main__form">
     <h5 class="main__form__heading">1. Input with subtypes and selected items are marked as tick</h5>
-    <ti-angular-tags-input formControlName="nestedData" class="main__form__ti" [tagsData]="sampleDataNested"
+    <ti-angular-tags-input formControlName="nestedData" class="main__form__ti" [tagsData]="(sampleDataNested$ | async)"
     (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="nestedTagsInputConfig"
     [dropDownTemplate]="ddNestedTemplate">
   </ti-angular-tags-input>
 
+    <input type="checkbox" name="hide-dd-on-blur" [checked]="nestedTagsInputConfig.hideDDOnBlur" (change)="changeNestedConfigOption($event, 'hideDDOnBlur')">
+    <label for="hide-dd-on-blur">Hide dropdown on blur</label> &nbsp; &nbsp;
+
+    <input type="checkbox" name="parent tag" [checked]="nestedTagsInputConfig.showParentTagsOnly" (change)="changeNestedConfigOption($event, 'showParentTagsOnly')">
+    <label for="parent tag">Show parent tags only</label> &nbsp; &nbsp;
+
+    <input type="checkbox" name="dd backdrop" [checked]="nestedTagsInputConfig.ddHasBackdrop" (change)="changeNestedConfigOption($event, 'ddHasBackdrop')">
+    <label for="dd backdrop">Dropdown has backdrop</label> &nbsp; &nbsp;
+
+    <h5>2. Custom nested component without showing tick on selected items.</h5>
+		<ti-angular-tags-input formControlName="nestedData" class="main__form__ti" [tagsData]="(sampleDataNested$ | async)"
+    (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="nestedTagsInputConfig1"
+      [dropDownTemplate]="ddNestedTemplate">
+    </ti-angular-tags-input>
+
     <h5 class="main__form__heading">2. Selected items will be hide from options list</h5>
-    <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="sampleDataSimple"
+    <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="(sampleDataSimple$ | async)"
       (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="simpleTagsInputConfig"
       [dropDownTemplate]="ddNestedTemplate" required="true">
     </ti-angular-tags-input>
 
     <h5 class="main__form__heading">3. Options to hide tick and items from list.</h5>
-    <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="sampleDataSimple"
+    <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="(sampleDataSimple$ | async)"
       (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="simpleTagsInputConfig2"
       [dropDownTemplate]="ddNestedTemplate" required="true">
     </ti-angular-tags-input>
 
-    <input type="checkbox" name="tick mark" [checked]="simpleTagsInputConfig2.hideTickMark" (change)="changeConfigOption($event, 'hideTickMark')">
+    <input type="checkbox" name="tick mark" [checked]="simpleTagsInputConfig2.showTagsSelectedInDD" (change)="changeConfigOption($event, 'showTagsSelectedInDD')">
     <label for="tick mark">Hide tick</label> &nbsp; &nbsp;
 
     <input type="checkbox" name="tags added" [checked]="simpleTagsInputConfig2.hideAddedTags" (change)="changeConfigOption($event, 'hideAddedTags')">
@@ -361,15 +376,21 @@
     <label for="hide tags">Hide tags</label> &nbsp; &nbsp;
 
     <input type="checkbox" name="selected item" [checked]="simpleTagsInputConfig2.toggleSelectionOnClick" (change)="changeConfigOption($event, 'toggleSelectionOnClick')">
-    <label for="selected item">Remove on click selected item</label>
+    <label for="selected item">Remove on click selected item</label> &nbsp; &nbsp;
 
+    <input type="checkbox" name="clear text" [checked]="simpleTagsInputConfig2.clearInputOnFocus" (change)="changeConfigOption($event, 'clearInputOnFocus')">
+    <label for="clear text">Clear input text onfocus</label> &nbsp; &nbsp;
+    
+    <input type="checkbox" name="create tag" [checked]="simpleTagsInputConfig2.onlyFromAutoComplete" (change)="changeConfigOption($event, 'onlyFromAutoComplete')">
+    <label for="create tag">Don't create tag on enter</label>
+    
     <div class="main__form__error"
       *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
       Value for simple data is required
     </div>
 
-    <h5 class="main__form__heading">4. Options with image and items are not marked as tick</h5>
-    <ti-angular-tags-input formControlName="imageData" class="main__form__ti" [tagsData]="sampleDataImage"
+    <h5 class="main__form__heading">4. Options with image</h5>
+    <ti-angular-tags-input formControlName="imageData" class="main__form__ti" [tagsData]="(sampleDataImage$ | async)"
       (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="imageTagsInputConfig"
       [dropDownTemplate]="imageDropdownTemplate">
     </ti-angular-tags-input>
@@ -425,7 +446,7 @@
         <div class="items-list__item__parent__text">
           {{item[config.displayProperty]}}
         </div>
-        <div *ngIf="item.tiSelected && !config.hideTickMark">
+        <div *ngIf="item.tiSelected && config.showTagsSelectedInDD">
           <img src="../assets/tick.png" alt="tick" width="14">
         </div>
       </div>
@@ -446,7 +467,7 @@
           <div class="items-children-list__item__children__child__item__text">
             {{item[config.displayProperty]}}
           </div>
-          <div *ngIf="item.tiSelected && !config.hideTickMark">
+          <div *ngIf="item.tiSelected && config.showTagsSelectedInDD">
             <img src="../assets/tick.png" alt="tick" width="14">
           </div>
         </div>

@@ -67,7 +67,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   };
   onChange: (items: AngularTagItem[]) => void;
   dropdownOverlayPosition = [
-    { offsetY: 28, originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+    { offsetY: 12, originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
     { offsetY: -28, originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
     { offsetY: 28, originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'bottom' },
     { offsetY: -28, originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
@@ -276,7 +276,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - tag to add
    */
   addTag(tag: AngularTagItem) {
-    tag.tiSelected = true; // marks the element as selected
+    if (this.config.showTagsSelectedInDD) {
+      tag.tiSelected = true; // marks the element as selected
+    }
     if (this.config.maxItems > 0 && this.tags.length === this.config.maxItems) {
       return;
     }
@@ -400,7 +402,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @param tag - the tag to mark as selected
    */
   selectRelatedTags(tag: AngularTagItem, ignoreChildren = false, ignoreParent = false) {
-    tag.tiSelected = true;
+    if (this.config.showTagsSelectedInDD) {
+      tag.tiSelected = true;
+    }
     if (tag[this.config.nestedTagProperty] && !ignoreChildren) {
       for (let i = 0, len = tag[this.config.nestedTagProperty].length; i < len; ++i) {
         if (this.config.showParentTagsOnly) {
