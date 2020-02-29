@@ -14,12 +14,11 @@ ti-angular-tags-input {
     align-items: center;
     background: white;
     flex-wrap: wrap;
-    padding: 8px 10px;
+    padding: 9px 18px 18px 18px;
     position: relative;
     top: 4px;
     &__tag-input {
       flex: 1;
-      margin-bottom: 8px;
     }
 
     &__tag {
