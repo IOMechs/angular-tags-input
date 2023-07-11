@@ -4,5 +4,8 @@
   "peerDependencies": {
     "@angular/common": "^8.2.11",
     "@angular/core": "^8.2.11"
+  },
+  "dependencies": {
+    "@iomechs/angular-tags-input": "^0.1.11"
   }
 }
