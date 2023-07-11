@@ -3,6 +3,7 @@ import { AngularTagsInputConfig, AngularTagsInputService } from 'projects/angula
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TAGS_DATA_NESTED, TAGS_DATA_SIMPLE, TAGS_DATA_IMAGES } from './data';
 import { of } from 'rxjs/internal/observable/of';
+import { CdkOverlayOrigin, ConnectionPositionPair } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'tid-root',
@@ -80,6 +81,7 @@ export class AppComponent {
     onlyFromAutoComplete: true,
     additionalClasses: 'ti-tags-input',
     displayProperty: 'full_name',
+    hoverProperty: 'description',
     identifier: 'Id',
     toggleSelectionOnClick: true,
     nestedTagParentProp: 'parent_id',
@@ -103,6 +105,27 @@ export class AppComponent {
     hideTags: false,
     ddHasBackdrop: false
   };
+  tooltipVisibility: boolean;
+  inputTooltipOverlayOrigin: CdkOverlayOrigin;
+  tooltipForInput: string;
+  inputTooltipShown: boolean;
+  inputTooltipPositions: ConnectionPositionPair[] = [
+    {
+      offsetY: 10,
+      originX: 'start',
+      originY: 'bottom',
+      overlayX: 'start',
+      overlayY: 'top',
+  },
+
+  {
+    offsetY: -10,
+    originX: 'start',
+    originY: 'top',
+    overlayX: 'start',
+    overlayY: 'bottom',
+  },
+];
 
   constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
     this.simpleForm = this.fb.group({
@@ -133,5 +156,46 @@ export class AppComponent {
       ...this.nestedTagsInputConfig,
       [option]: event.target.checked,
     };
+  }
+
+  toggleInputTooltip(
+    item: string,
+    origin: any,
+    show: boolean,
+    event: string
+  ) {
+    if(event === 'mouseenter'){
+      this.tooltipVisibility = true;
+    }
+    if (event === 'mousedown') {
+      this.tooltipVisibility = false;
+      this.inputTooltipOverlayOrigin = origin;
+      this.tooltipForInput = item;
+      if (!show) {
+        this.inputTooltipShown = false;
+      } else {
+        setTimeout(() => {
+          this.inputTooltipShown = true;
+        }, 500);
+      }
+    }
+    if (event === 'mouseup') {
+      this.tooltipVisibility = true;
+    }
+    if (this.tooltipVisibility) {
+      if (this.inputTooltipShown && show) {
+        return;
+      }
+  
+      this.inputTooltipOverlayOrigin = origin;
+      this.tooltipForInput = item;
+      if (!show) {
+        this.inputTooltipShown = false;
+      } else {
+        setTimeout(() => {
+          this.inputTooltipShown = true;
+        }, 500);
+      }
+    }
   }
 }

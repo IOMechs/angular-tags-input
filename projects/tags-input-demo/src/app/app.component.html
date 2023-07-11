@@ -442,7 +442,9 @@
   <div class="items-list" style="max-height: 250px; overflow-y: auto;padding-top: 8px;">
     <div class="items-list__item" *ngFor="let item of items">
       <div tiKeyboardActiveClass="items-list__item__parent--selected" [isKeyboardActiveItem]="item.tiKeyboardActive"
-        class="items-list__item__parent" (click)="fns.onItemClicked(item)">
+        class="items-list__item__parent" (click)="fns.onItemClicked(item)" cdkOverlayOrigin #onHoverTrigger="cdkOverlayOrigin"
+        (mouseenter)="toggleInputTooltip(item[config.hoverProperty], onHoverTrigger, true, 'mouseenter')"
+        (mouseleave)="toggleInputTooltip(item[config.hoverProperty], onHoverTrigger, false, 'mouseleave')">
         <div class="items-list__item__parent__text">
           {{item[config.displayProperty]}}
         </div>
@@ -451,10 +453,10 @@
         </div>
       </div>
       <ng-container
-        *ngTemplateOutlet="ddNestedChildrenTemplate; context: {items: item[config.nestedTagProperty], config: config, fns: fns}">
-      </ng-container>
-    </div>
+      *ngTemplateOutlet="ddNestedChildrenTemplate; context: {items: item[config.nestedTagProperty], config: config, fns: fns}">
+    </ng-container>
   </div>
+</div>
 </ng-template>
 
 <ng-template #ddNestedChildrenTemplate let-items="items" let-fns="fns" let-config="config">
@@ -463,8 +465,8 @@
       <div tiKeyboardActiveClass="items-children-list__item__children__child--selected"
         [isKeyboardActiveItem]="item.tiKeyboardActive" class="items-children-list__item__children__child"
         (click)="fns.onItemClicked(item, $event)">
-        <div class="items-children-list__item__children__child__item">
-          <div class="items-children-list__item__children__child__item__text">
+        <div cdkOverlayOrigin #onHoverTrigger="cdkOverlayOrigin" class="items-children-list__item__children__child__item">
+        <div class="items-children-list__item__children__child__item__text">
             {{item[config.displayProperty]}}
           </div>
           <div *ngIf="item.tiSelected && config.showTagsSelectedInDD">
@@ -477,4 +479,11 @@
       </div>
     </ng-container>
   </div>
+</ng-template>
+
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="inputTooltipOverlayOrigin"
+[cdkConnectedOverlayOpen]="inputTooltipShown" [cdkConnectedOverlayPositions]="inputTooltipPositions">
+<div class="tooltip-main" *ngIf="tooltipForInput" style="padding: 20px">
+  {{ tooltipForInput }}
+</div>
 </ng-template>

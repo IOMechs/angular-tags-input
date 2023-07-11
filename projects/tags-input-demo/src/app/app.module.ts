@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { AngularTagsInputModule } from 'projects/angular-tags-input/src/public-api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsersListItemComponent } from './users-list-item/users-list-item.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+
 
 @NgModule({
   declarations: [
@@ -16,8 +18,10 @@ import { UsersListItemComponent } from './users-list-item/users-list-item.compon
     BrowserModule,
     AppRoutingModule,
     AngularTagsInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OverlayModule
   ],
+  exports: [OverlayModule],
   providers: [],
   bootstrap: [AppComponent]
 })

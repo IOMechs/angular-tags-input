@@ -5,6 +5,7 @@ export interface AngularTagsInputConfig {
   additionalClasses?: string;
   placeholder?: string;
   displayProperty?: string;
+  hoverProperty?: string
   identifier?: string;
   onlyFromAutoComplete?: boolean;
   childrenCountProperty?: string;
