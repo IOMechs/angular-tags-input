@@ -443,8 +443,8 @@
     <div class="items-list__item" *ngFor="let item of items">
       <div tiKeyboardActiveClass="items-list__item__parent--selected" [isKeyboardActiveItem]="item.tiKeyboardActive"
         class="items-list__item__parent" (click)="fns.onItemClicked(item)" cdkOverlayOrigin #onHoverTrigger="cdkOverlayOrigin"
-        (mouseenter)="toggleInputTooltip(item[config.hoverProperty], onHoverTrigger, true, 'mouseenter')"
-        (mouseleave)="toggleInputTooltip(item[config.hoverProperty], onHoverTrigger, false, 'mouseleave')">
+        (mouseenter)="toggleInputTooltip(item[config.hoverProperty], onHoverTrigger, true)"
+        (mouseleave)="toggleInputTooltip(item[config.hoverProperty], onHoverTrigger, false)">
         <div class="items-list__item__parent__text">
           {{item[config.displayProperty]}}
         </div>

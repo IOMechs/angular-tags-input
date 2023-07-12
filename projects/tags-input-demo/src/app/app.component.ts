@@ -105,7 +105,6 @@ export class AppComponent {
     hideTags: false,
     ddHasBackdrop: false
   };
-  tooltipVisibility: boolean;
   inputTooltipOverlayOrigin: CdkOverlayOrigin;
   tooltipForInput: string;
   inputTooltipShown: boolean;
@@ -160,33 +159,12 @@ export class AppComponent {
 
   toggleInputTooltip(
     item: string,
-    origin: any,
+    origin: CdkOverlayOrigin,
     show: boolean,
-    event: string
   ) {
-    if(event === 'mouseenter'){
-      this.tooltipVisibility = true;
-    }
-    if (event === 'mousedown') {
-      this.tooltipVisibility = false;
-      this.inputTooltipOverlayOrigin = origin;
-      this.tooltipForInput = item;
-      if (!show) {
-        this.inputTooltipShown = false;
-      } else {
-        setTimeout(() => {
-          this.inputTooltipShown = true;
-        }, 500);
-      }
-    }
-    if (event === 'mouseup') {
-      this.tooltipVisibility = true;
-    }
-    if (this.tooltipVisibility) {
       if (this.inputTooltipShown && show) {
         return;
       }
-  
       this.inputTooltipOverlayOrigin = origin;
       this.tooltipForInput = item;
       if (!show) {
@@ -196,6 +174,5 @@ export class AppComponent {
           this.inputTooltipShown = true;
         }, 500);
       }
-    }
   }
 }
