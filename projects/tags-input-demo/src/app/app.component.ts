@@ -105,27 +105,7 @@ export class AppComponent {
     hideTags: false,
     ddHasBackdrop: false
   };
-  inputTooltipOverlayOrigin: CdkOverlayOrigin;
-  tooltipForInput: string;
-  inputTooltipShown: boolean;
-  inputTooltipPositions: ConnectionPositionPair[] = [
-    {
-      offsetY: 10,
-      originX: 'start',
-      originY: 'bottom',
-      overlayX: 'start',
-      overlayY: 'top',
-  },
 
-  {
-    offsetY: -10,
-    originX: 'start',
-    originY: 'top',
-    overlayX: 'start',
-    overlayY: 'bottom',
-  },
-];
-  tooltipTimeout: NodeJS.Timer;
 
   constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
     this.simpleForm = this.fb.group({
@@ -158,16 +138,4 @@ export class AppComponent {
     };
   }
 
-  showTooltip(item: string, origin: CdkOverlayOrigin) {
-    this.tooltipForInput = item;
-    this.inputTooltipOverlayOrigin = origin;
-    this.tooltipTimeout = setTimeout(() => {
-      this.inputTooltipShown = true;
-    }, 500);
-  }
-
-  hideTooltip() {
-    clearTimeout(this.tooltipTimeout);
-    this.inputTooltipShown = false;
-  }
 }

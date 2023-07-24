@@ -13,10 +13,19 @@
           (click)="onItemClicked(item)"
           tiKeyboardActiveClass="angular-tags-dropdown__list__item--active"
           [isKeyboardActiveItem]="item.tiKeyboardActive"
+          (mouseenter)="showTooltip(item[config.hoverProperty])"
+          (mouseleave)="hideTooltip()"
           >
           {{item[config.displayProperty]}}
         </div>
       </ng-container>
     </div>
   </div>
+</ng-template>
+
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="inputTooltipOverlayOrigin"
+[cdkConnectedOverlayOpen]="inputTooltipShown" [cdkConnectedOverlayPositions]="inputTooltipPositions">
+<div class="tooltip-main" *ngIf="tooltipForInput">
+  {{ tooltipForInput }}
+</div>
 </ng-template>

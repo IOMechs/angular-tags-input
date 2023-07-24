@@ -19,6 +19,7 @@ import {
 import { KEY_CODES } from '../constants';
 import { AngularTagsInputService } from '../angular-tags-input.service';
 import { DropdownItemsFilterPipe } from '../dropdown-items-filter.pipe';
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'ti-dropdown',
@@ -43,6 +44,10 @@ export class DropdownComponent
   identifierSeparator = '__';
   keyboardEventsManager: ListKeyManager<ListKeyManagerOption>;
   itemsMap: Map<string, any> = new Map<string, any>();
+  tooltipForInput: string;
+  inputTooltipOverlayOrigin: CdkOverlayOrigin;
+  tooltipTimeout: any;
+  inputTooltipShown: boolean;
   constructor(
     private tagsInputService: AngularTagsInputService
   ) {}
@@ -57,7 +62,9 @@ export class DropdownComponent
       config: this.config,
       tagsLoading: this.tagsLoading,
       fns: {
-        onItemClicked: this.onItemClicked.bind(this)
+        onItemClicked: this.onItemClicked.bind(this),
+        showTooltip: this.showTooltip.bind(this),
+        hideTooltip: this.hideTooltip.bind(this)
       }
     };
     this.keyboardEventsManager = new ListKeyManager([...this.listItems as any]);
@@ -124,6 +131,7 @@ export class DropdownComponent
    * @param item - item clicked
    */
   onItemClicked(item: AngularTagItem, $event = null) {
+    console.log('hereeeee');
     if ($event) {
       $event.stopImmediatePropagation(); // for nested items
     }
@@ -289,5 +297,19 @@ export class DropdownComponent
         this.setActiveElementRecursively(identifier, items[i][this.config.nestedTagProperty]);
       }
     }
+  }
+
+  showTooltip(item: string, origin?: CdkOverlayOrigin) {
+    this.tooltipForInput = item;
+    this.inputTooltipOverlayOrigin = origin;
+    this.tooltipTimeout = setTimeout(() => {
+      this.inputTooltipShown = true;
+    }, 500);
+  }
+  
+  hideTooltip() {
+    console.log('hereeeee');
+    clearTimeout(this.tooltipTimeout);
+    this.inputTooltipShown = false;
   }
 }
