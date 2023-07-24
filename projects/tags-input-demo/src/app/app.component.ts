@@ -125,6 +125,7 @@ export class AppComponent {
     overlayY: 'bottom',
   },
 ];
+  tooltipTimeout: NodeJS.Timer;
 
   constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
     this.simpleForm = this.fb.group({
@@ -157,22 +158,16 @@ export class AppComponent {
     };
   }
 
-  toggleInputTooltip(
-    item: string,
-    origin: CdkOverlayOrigin,
-    show: boolean,
-  ) {
-      if (this.inputTooltipShown && show) {
-        return;
-      }
-      this.inputTooltipOverlayOrigin = origin;
-      this.tooltipForInput = item;
-      if (!show) {
-        this.inputTooltipShown = false;
-      } else {
-        setTimeout(() => {
-          this.inputTooltipShown = true;
-        }, 500);
-      }
+  showTooltip(item: string, origin: CdkOverlayOrigin) {
+    this.tooltipForInput = item;
+    this.inputTooltipOverlayOrigin = origin;
+    this.tooltipTimeout = setTimeout(() => {
+      this.inputTooltipShown = true;
+    }, 500);
+  }
+
+  hideTooltip() {
+    clearTimeout(this.tooltipTimeout);
+    this.inputTooltipShown = false;
   }
 }
