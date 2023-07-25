@@ -131,7 +131,6 @@ export class DropdownComponent
    * @param item - item clicked
    */
   onItemClicked(item: AngularTagItem, $event = null) {
-    console.log('hereeeee');
     if ($event) {
       $event.stopImmediatePropagation(); // for nested items
     }
@@ -308,7 +307,6 @@ export class DropdownComponent
   }
   
   hideTooltip() {
-    console.log('hereeeee');
     clearTimeout(this.tooltipTimeout);
     this.inputTooltipShown = false;
   }
