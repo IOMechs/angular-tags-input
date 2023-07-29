@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { AngularTagsInputConfig, AngularTagsInputService } from 'projects/angular-tags-input/src/public-api';
+import {
+  AngularTagsInputConfig,
+  AngularTagsInputService
+} from 'projects/angular-tags-input/src/public-api';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TAGS_DATA_NESTED, TAGS_DATA_SIMPLE, TAGS_DATA_IMAGES } from './data';
 import { of } from 'rxjs/internal/observable/of';
-import { CdkOverlayOrigin, ConnectionPositionPair } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'tid-root',
@@ -27,12 +29,13 @@ export class AppComponent {
     additionalClasses: 'ti-tags-input',
     displayProperty: 'name',
     identifier: 'id',
-    placeholder: 'Search',// only for those inputs having options
+    placeholder: 'Search', // only for those inputs having options
     toggleSelectionOnClick: true,
     nestedTagParentProp: 'parentId',
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: false,
+    showTooltipOnOptions: true,
     ddHasBackdrop: true // to close on click outside dropdown
   };
 
@@ -69,7 +72,7 @@ export class AppComponent {
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: false,
-    ddHasBackdrop: false,
+    ddHasBackdrop: false
   };
 
   simpleTagsInputConfig2: AngularTagsInputConfig = {
@@ -89,8 +92,8 @@ export class AppComponent {
     showParentTagsOnly: true,
     hideTags: false,
     ddHasBackdrop: false,
+    showTooltipOnOptions: true
   };
-
 
   imageTagsInputConfig: AngularTagsInputConfig = {
     showTagsSelectedInDD: true,
@@ -106,20 +109,20 @@ export class AppComponent {
     ddHasBackdrop: false
   };
 
-
-  constructor(private fb: FormBuilder, private tagsInputService: AngularTagsInputService) {
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly tagsInputService: AngularTagsInputService
+  ) {
     this.simpleForm = this.fb.group({
       simpleData: [[], []],
       nestedData: [[], []],
       nestedData1: [[], []],
-      imageData: [[], []],
+      imageData: [[], []]
     });
     this.tagsInputService.setDebugMode(true);
   }
 
-
-  onValChanged($event) {
-  }
+  onValChanged($event) { }
 
   onTagAdded($event) {
     console.log(this.simpleForm.value);
@@ -128,14 +131,14 @@ export class AppComponent {
   changeConfigOption(event: any, option) {
     this.simpleTagsInputConfig2 = {
       ...this.simpleTagsInputConfig2,
-      [option]: event.target.checked, 
-    };
-  }
-  changeNestedConfigOption(event: any, option) {
-    this.nestedTagsInputConfig = {
-      ...this.nestedTagsInputConfig,
-      [option]: event.target.checked,
+      [option]: event.target.checked
     };
   }
 
+  changeNestedConfigOption(event: any, option) {
+    this.nestedTagsInputConfig = {
+      ...this.nestedTagsInputConfig,
+      [option]: event.target.checked
+    };
+  }
 }

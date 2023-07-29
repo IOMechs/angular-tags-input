@@ -89,7 +89,14 @@ export const TAGS_DATA_SIMPLE = [
   {
     Id: 72,
     full_name: 'Anonymous Person',
-    description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore consequatur vitae iusto explicabo adipisci mollitia amet porro incidunt quos dolorum.',
+    description: `
+    Lorem ipsum dolor,
+    sit amet consectetur
+    adipisicing elit.
+    Tempore consequatur vitae
+    iusto explicabo adipisci mollitia amet
+     porro incidunt quos dolorum.
+  `,
   },
   {
     Id: 320,

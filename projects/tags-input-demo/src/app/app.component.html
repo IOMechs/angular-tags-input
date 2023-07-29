@@ -369,9 +369,12 @@
     <input type="checkbox" name="tick mark" [checked]="simpleTagsInputConfig2.showTagsSelectedInDD" (change)="changeConfigOption($event, 'showTagsSelectedInDD')">
     <label for="tick mark">Hide tick</label> &nbsp; &nbsp;
 
+    <input type="checkbox" name="show-tooltip-on-options" [checked]="simpleTagsInputConfig2.showTooltipOnOptions" (change)="changeConfigOption($event, 'showTooltipOnOptions')">
+    <label for="show-tooltip-on-options">Show tooltip on Options</label> &nbsp; &nbsp;
+
     <input type="checkbox" name="tags added" [checked]="simpleTagsInputConfig2.hideAddedTags" (change)="changeConfigOption($event, 'hideAddedTags')">
     <label for="tags added">Hide items</label> &nbsp; &nbsp;
-    
+
     <input type="checkbox" name="hide tags" [checked]="simpleTagsInputConfig2.hideTags" (change)="changeConfigOption($event, 'hideTags')">
     <label for="hide tags">Hide tags</label> &nbsp; &nbsp;
 
@@ -380,10 +383,10 @@
 
     <input type="checkbox" name="clear text" [checked]="simpleTagsInputConfig2.clearInputOnFocus" (change)="changeConfigOption($event, 'clearInputOnFocus')">
     <label for="clear text">Clear input text onfocus</label> &nbsp; &nbsp;
-    
+
     <input type="checkbox" name="create tag" [checked]="simpleTagsInputConfig2.onlyFromAutoComplete" (change)="changeConfigOption($event, 'onlyFromAutoComplete')">
     <label for="create tag">Don't create tag on enter</label>
-    
+
     <div class="main__form__error"
       *ngIf="simpleForm.get('simpleData').dirty && simpleForm.get('simpleData').hasError('required')">
       Value for simple data is required
@@ -444,7 +447,7 @@
       <div tiKeyboardActiveClass="items-list__item__parent--selected" [isKeyboardActiveItem]="item.tiKeyboardActive"
         class="items-list__item__parent" (click)="fns.onItemClicked(item)" cdkOverlayOrigin #onHoverTrigger="cdkOverlayOrigin"
         (mouseenter)="fns.showTooltip(item[config.hoverProperty], onHoverTrigger)"
-        (mouseleave)="fns.hideTooltip()"> 
+        (mouseleave)="fns.hideTooltip()">
         <div class="items-list__item__parent__text">
           {{item[config.displayProperty]}}
         </div>

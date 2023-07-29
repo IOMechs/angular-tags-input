@@ -1,11 +1,12 @@
 export interface AngularTagsInputConfig {
   defaultClass?: string;
+  showTooltipOnOptions?: boolean;
   ddHasBackdrop?: boolean;
   keyboardActiveClass?: string;
   additionalClasses?: string;
   placeholder?: string;
   displayProperty?: string;
-  hoverProperty?: string
+  hoverProperty?: string;
   identifier?: string;
   onlyFromAutoComplete?: boolean;
   childrenCountProperty?: string;
@@ -25,8 +26,8 @@ export interface AngularTagsInputConfig {
 }
 
 export interface AngularTagsInputDDFns {
-  onItemAdded?(item: AngularTagItem): void;
-  onItemClicked?(item: AngularTagItem): void;
+  onItemAdded?: (item: AngularTagItem) => void;
+  onItemClicked?: (item: AngularTagItem) => void;
 }
 
 export interface AngularTagItem {
