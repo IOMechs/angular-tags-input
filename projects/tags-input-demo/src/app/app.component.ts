@@ -55,7 +55,8 @@ export class AppComponent {
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: false,
-    ddHasBackdrop: true
+    ddHasBackdrop: true,
+    hideDDOnTagSelect: true, // to close on selecting a tag
   };
 
   simpleTagsInputConfig: AngularTagsInputConfig = {
