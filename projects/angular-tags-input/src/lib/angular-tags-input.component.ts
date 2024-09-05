@@ -63,7 +63,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     hideTags: false,
     maxItems: null,
     nestedTagParentProp: '',
-    keyboardActiveClass: 'angular-tags-dropdown__list__item--active'
+    keyboardActiveClass: 'angular-tags-dropdown__list__item--active',
   };
   onChange: (items: AngularTagItem[]) => void;
   dropdownOverlayPosition = [
@@ -179,7 +179,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * @author Ahsan Ayaz
    * @desc Registers the on change function to the value accessor
    */
-  registerOnChange( fn: any ): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
@@ -346,7 +346,9 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     }
     this.tagInput.resetInput();
     this.itemClicked.emit(tag);
-    this.hideDropdown();
+    if (this.config.hideDDOnTagSelect) {
+      this.hideDropdown();
+    }
   }
 
   /**
@@ -432,7 +434,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
         return tagItem[this.config.nestedTagParentProp] == parentTag[this.config.identifier];
       }).length;
       if (
-        ( parentTagChildren > 0 && childrensSelected > 0 ) &&
+        (parentTagChildren > 0 && childrensSelected > 0) &&
         (this.config.childrenCountProperty ?
           childrensSelected === parentTag[this.config.childrenCountProperty] :
           childrensSelected === parentTagChildren
