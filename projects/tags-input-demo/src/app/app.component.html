@@ -445,7 +445,7 @@
 
 
 <ng-template #ddNestedTemplate let-items="items" let-config="config" let-fns="fns">
-  <div class="items-list" style="max-height: 250px; overflow-y: auto;padding-top: 8px;">
+  <div class="items-list" *ngIf="items.length" style="max-height: 250px; overflow-y: auto;padding-top: 8px;">
     <div class="items-list__item" *ngFor="let item of items">
       <div tiKeyboardActiveClass="items-list__item__parent--selected" [isKeyboardActiveItem]="item.tiKeyboardActive"
         class="items-list__item__parent" (click)="fns.onItemClicked(item)" cdkOverlayOrigin #onHoverTrigger="cdkOverlayOrigin"
@@ -461,8 +461,11 @@
       <ng-container
       *ngTemplateOutlet="ddNestedChildrenTemplate; context: {items: item[config.nestedTagProperty], config: config, fns: fns}">
     </ng-container>
+    </div>
   </div>
-</div>
+  <div class="items-list__item" *ngIf="!items.length">
+    <span>No results to show</span>
+  </div>
 </ng-template>
 
 <ng-template #ddNestedChildrenTemplate let-items="items" let-fns="fns" let-config="config">
@@ -484,5 +487,8 @@
         </ng-container>
       </div>
     </ng-container>
+    <div class="items-list__item" *ngIf="!items?.length">
+      <span>No results to show</span>
+    </div>
   </div>
 </ng-template>

@@ -50,7 +50,6 @@ export class DropdownComponent
   inputTooltipOverlayOrigin: CdkOverlayOrigin;
   tooltipTimeout: number;
   inputTooltipShown: boolean;
-  noRecordsFound: boolean;
   inputTooltipPositions = [
     { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
     { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
@@ -107,14 +106,9 @@ export class DropdownComponent
    */
 
   filterItems(searchTerm = this.inputVal, items = this.listItems) {
-    const filteredItems = this.dropdownItemsFilter.transform(items, this.config, searchTerm);
-    if (filteredItems.length === 0) {
-      this.context.items = [];
-      this.noRecordsFound = true;
-    } else {
-      this.context.items = [...filteredItems];
-      this.noRecordsFound = false;
-    }
+    this.context.items = [
+      ...this.dropdownItemsFilter.transform(items, this.config, searchTerm)
+    ];
     this.ddIdPrefix = this.getRandomString();
   }
 

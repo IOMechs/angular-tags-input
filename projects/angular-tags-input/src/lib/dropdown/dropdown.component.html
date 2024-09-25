@@ -1,15 +1,6 @@
-<ng-container *ngIf="!noRecordsFound; else noRecordsTemplate">
-  <ng-container
-    *ngTemplateOutlet="dropDownTemplate; context: context"
-  ></ng-container>
-</ng-container>
-
-<!-- No records found template -->
-<ng-template #noRecordsTemplate>
-  <div class="no-records-found">
-    No Record Found
-  </div>
-</ng-template>
+<ng-container
+  *ngTemplateOutlet="dropDownTemplate; context: context"
+></ng-container>
 
 <!-- Default Tag Options Template -->
 <ng-template #defaultTagOptionTemplate let-items="items" let-config="config">
@@ -26,6 +17,9 @@
         >
           {{ item[config.displayProperty] }}
         </div>
+      </ng-container>
+      <ng-container *ngIf="!items.length">
+        <div>No results to show</div>
       </ng-container>
     </div>
   </div>
