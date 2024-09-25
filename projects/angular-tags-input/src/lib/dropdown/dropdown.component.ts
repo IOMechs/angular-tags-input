@@ -50,6 +50,7 @@ export class DropdownComponent
   inputTooltipOverlayOrigin: CdkOverlayOrigin;
   tooltipTimeout: number;
   inputTooltipShown: boolean;
+  noRecordsFound: boolean;
   constructor(private readonly tagsInputService: AngularTagsInputService) { }
 
   ngOnInit() {
@@ -100,9 +101,14 @@ export class DropdownComponent
    */
 
   filterItems(searchTerm = this.inputVal, items = this.listItems) {
-    this.context.items = [
-      ...this.dropdownItemsFilter.transform(items, this.config, searchTerm)
-    ];
+    const filteredItems = this.dropdownItemsFilter.transform(items, this.config, searchTerm);
+    if (filteredItems.length === 0) {
+      this.context.items = [];
+      this.noRecordsFound = true;
+    } else {
+      this.context.items = [...filteredItems];
+      this.noRecordsFound = false;
+    }
     this.ddIdPrefix = this.getRandomString();
   }
 
