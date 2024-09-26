@@ -1,13 +1,12 @@
-
 <ng-container
- *ngTemplateOutlet="dropDownTemplate; context: context">
-</ng-container>
+  *ngTemplateOutlet="dropDownTemplate; context: context"
+></ng-container>
 
 <!-- Default Tag Options Template -->
 <ng-template #defaultTagOptionTemplate let-items="items" let-config="config">
   <div class="angular-tags-dropdown">
     <div class="angular-tags-dropdown__list">
-      <ng-container *ngFor="let item of items, let i = index">
+      <ng-container *ngFor="let item of items; let i = index">
         <div
           class="angular-tags-dropdown__list__item"
           (click)="onItemClicked(item)"
@@ -15,17 +14,24 @@
           [isKeyboardActiveItem]="item.tiKeyboardActive"
           (mouseenter)="showTooltip(item[config.hoverProperty])"
           (mouseleave)="hideTooltip()"
-          >
-          {{item[config.displayProperty]}}
+        >
+          {{ item[config.displayProperty] }}
         </div>
+      </ng-container>
+      <ng-container *ngIf="!items.length">
+        <div>No results to show</div>
       </ng-container>
     </div>
   </div>
 </ng-template>
 
-<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="inputTooltipOverlayOrigin"
-[cdkConnectedOverlayOpen]="inputTooltipShown" [cdkConnectedOverlayPositions]="inputTooltipPositions">
-<div class="tooltip-main" *ngIf="tooltipForInput">
-  {{ tooltipForInput }}
-</div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="inputTooltipOverlayOrigin"
+  [cdkConnectedOverlayOpen]="inputTooltipShown"
+  [cdkConnectedOverlayPositions]="inputTooltipPositions"
+>
+  <div class="tooltip-main" *ngIf="tooltipForInput">
+    {{ tooltipForInput }}
+  </div>
 </ng-template>

@@ -1,15 +1,19 @@
 :host {
   display: block;
+
   .angular-tags-dropdown {
     padding: 8px 10px;
+
     &__list {
       &__item {
         padding: 8px 10px;
         cursor: pointer;
         transition: all ease 0.5s;
+
         &:hover {
           background: #dcdcdc;
         }
+
         &--active {
           background: #333;
           color: white;
