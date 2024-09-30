@@ -1,6 +1,12 @@
 <ng-container
-  *ngTemplateOutlet="dropDownTemplate; context: context"
-></ng-container>
+ *ngTemplateOutlet="dropDownTemplate; context: context">
+</ng-container>
+
+<ng-container *ngIf="!context.items.length">
+    <div class="angular-tags-dropdown">
+      No results to show
+    </div>
+</ng-container>
 
 <!-- Default Tag Options Template -->
 <ng-template #defaultTagOptionTemplate let-items="items" let-config="config">
@@ -17,9 +23,6 @@
         >
           {{ item[config.displayProperty] }}
         </div>
-      </ng-container>
-      <ng-container *ngIf="!items.length">
-        <div>No results to show</div>
       </ng-container>
     </div>
   </div>
