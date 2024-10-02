@@ -36,7 +36,8 @@ export class AppComponent {
     showParentTagsOnly: true,
     hideTags: false,
     showTooltipOnOptions: true,
-    ddHasBackdrop: true // to close on click outside dropdown
+    ddHasBackdrop: true, // to close on click outside dropdown
+    hideDDOnTagSelect: true,
   };
 
   nestedTagsInputConfig: AngularTagsInputConfig = {
@@ -73,7 +74,8 @@ export class AppComponent {
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: false,
-    ddHasBackdrop: false
+    ddHasBackdrop: true,
+    hideDDOnTagSelect: true,
   };
 
   simpleTagsInputConfig2: AngularTagsInputConfig = {
@@ -92,8 +94,9 @@ export class AppComponent {
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: false,
-    ddHasBackdrop: false,
-    showTooltipOnOptions: true
+    ddHasBackdrop: true,
+    showTooltipOnOptions: true,
+    hideDDOnTagSelect: true,
   };
 
   imageTagsInputConfig: AngularTagsInputConfig = {
@@ -107,7 +110,8 @@ export class AppComponent {
     clearInputOnFocus: true,
     showParentTagsOnly: true,
     hideTags: false,
-    ddHasBackdrop: false
+    ddHasBackdrop: true,
+    hideDDOnTagSelect: true,
   };
 
   constructor(
