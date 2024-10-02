@@ -3,14 +3,14 @@
 </ng-container>
 
 <ng-container *ngIf="!context.items.length">
-    <div class="angular-tags-dropdown">
+    <div class="no-results">
       No results to show
     </div>
 </ng-container>
 
 <!-- Default Tag Options Template -->
 <ng-template #defaultTagOptionTemplate let-items="items" let-config="config">
-  <div class="angular-tags-dropdown">
+  <div *ngIf="context.items.length" class="angular-tags-dropdown">
     <div class="angular-tags-dropdown__list">
       <ng-container *ngFor="let item of items; let i = index">
         <div

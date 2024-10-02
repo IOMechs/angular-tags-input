@@ -357,13 +357,13 @@
       [dropDownTemplate]="ddNestedTemplate">
     </ti-angular-tags-input>
 
-    <h5 class="main__form__heading">2. Selected items will be hide from options list</h5>
+    <h5 class="main__form__heading">3. Selected items will be hide from options list</h5>
     <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="(sampleDataSimple$ | async)"
       (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="simpleTagsInputConfig"
       [dropDownTemplate]="ddNestedTemplate" required="true">
     </ti-angular-tags-input>
 
-    <h5 class="main__form__heading">3. Options to hide tick and items from list.</h5>
+    <h5 class="main__form__heading">4. Options to hide tick and items from list.</h5>
     <ti-angular-tags-input formControlName="simpleData" class="main__form__ti" [tagsData]="(sampleDataSimple$ | async)"
       (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="simpleTagsInputConfig2"
       [dropDownTemplate]="ddNestedTemplate" required="true">
@@ -395,7 +395,7 @@
       Value for simple data is required
     </div>
 
-    <h5 class="main__form__heading">4. Options with image</h5>
+    <h5 class="main__form__heading">5. Options with image</h5>
     <ti-angular-tags-input formControlName="imageData" class="main__form__ti" [tagsData]="(sampleDataImage$ | async)"
       (tagAdded)="onTagAdded($event)" (valueChanged)="onValChanged($event)" [config]="imageTagsInputConfig"
       [dropDownTemplate]="imageDropdownTemplate">
@@ -403,7 +403,7 @@
   </form>
 </div>
 <ng-template #imageDropdownTemplate let-items="items" let-config="config" let-fns="fns">
-  <div class="users-list">
+  <div *ngIf="items.length" class="users-list">
     <tid-users-list-item *ngFor="let data of items" [item]="data" [config]="config" (itemClicked)="fns.onItemClicked($event)">
     </tid-users-list-item>
   </div>
