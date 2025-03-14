@@ -81,6 +81,17 @@ export class TagInputComponent implements OnInit, OnChanges {
     this.resetInput();
   }
 
+    /**
+   *  @author Annas baig
+   * @desc focus the input field
+   *
+   */
+    focus() {
+      if (this.inputEl) {
+        this.inputEl.nativeElement.focus();
+      }
+    }
+
   /**
    * @author Ahsan Ayaz
    * @desc Resets the input value
