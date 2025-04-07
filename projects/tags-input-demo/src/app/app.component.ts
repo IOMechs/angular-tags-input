@@ -3,7 +3,7 @@ import {
   AngularTagsInputConfig,
   AngularTagsInputService,
 } from "angular-tags-input"; // Use mapped path
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { TAGS_DATA_NESTED, TAGS_DATA_SIMPLE, TAGS_DATA_IMAGES } from "./data";
 import { of } from "rxjs/internal/observable/of";
 
@@ -13,7 +13,7 @@ import { of } from "rxjs/internal/observable/of";
   styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  simpleForm: FormGroup;
+  simpleForm: UntypedFormGroup;
   title = "tags-input-demo";
   sampleDataNested$ = of(TAGS_DATA_NESTED);
   sampleDataSimple$ = of(TAGS_DATA_SIMPLE);
@@ -115,7 +115,7 @@ export class AppComponent {
   };
 
   constructor(
-    private readonly fb: FormBuilder,
+    private readonly fb: UntypedFormBuilder,
     private readonly tagsInputService: AngularTagsInputService
   ) {
     this.simpleForm = this.fb.group({

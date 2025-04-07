@@ -14,7 +14,7 @@ import {
   ViewEncapsulation,
   HostListener,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, FormControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, UntypedFormControl } from '@angular/forms';
 
 import { AngularTagsInputService } from './angular-tags-input.service';
 import { TagInputComponent } from './tag-input/tag-input.component';
@@ -190,7 +190,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
    * Doesn't do anything if the control is not required
    * If it is required, checks if the control contains value
    */
-  validate(control: FormControl) {
+  validate(control: UntypedFormControl) {
     if (this.required === false) {
       return null;
     }

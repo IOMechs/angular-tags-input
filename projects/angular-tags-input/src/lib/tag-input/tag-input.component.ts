@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, SimpleChanges, OnChanges } from '@angular/core';
 import { AngularTagItem, AngularTagsInputConfig } from '../tags-input-interfaces';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -17,8 +17,8 @@ export class TagInputComponent implements OnInit, OnChanges {
   @Output() inputBlurred = new EventEmitter<string>();
   @Output() tagEntered = new EventEmitter<AngularTagItem>();
   @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
-  tagInputForm = new FormGroup({
-    tagInputVal: new FormControl('')
+  tagInputForm = new UntypedFormGroup({
+    tagInputVal: new UntypedFormControl('')
   });
   lastValueEmitted: string;
   constructor() { }
