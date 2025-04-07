@@ -70,7 +70,6 @@
             "main": "projects/tags-input-demo/src/main.ts",
             "polyfills": "projects/tags-input-demo/src/polyfills.ts",
             "tsConfig": "projects/tags-input-demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/tags-input-demo/src/favicon.ico",
               "projects/tags-input-demo/src/assets"
@@ -78,7 +77,13 @@
             "styles": [
               "projects/tags-input-demo/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -109,7 +114,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
