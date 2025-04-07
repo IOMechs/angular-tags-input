@@ -19,12 +19,15 @@ module.exports = {
         "<rootDir>/e2e-playwright/",
         "<rootDir>/projects/tags-input-demo/", // Ignore demo app tests for this project config
       ],
-      globals: {
-        "ts-jest": {
-          tsconfig: "<rootDir>/projects/angular-tags-input/tsconfig.spec.json",
-          stringifyContentPathRegex: "\\.html$",
-          diagnostics: false,
-        },
+      transform: {
+        "^.+\\.(ts|js|mjs|html|svg)$": [
+          "jest-preset-angular",
+          {
+            tsconfig:
+              "<rootDir>/projects/angular-tags-input/tsconfig.spec.json",
+            stringifyContentPathRegex: "\\.html$",
+          },
+        ],
       },
     },
     // Configuration for the demo application
@@ -41,12 +44,14 @@ module.exports = {
         "<rootDir>/projects/angular-tags-input/", // Ignore library tests for this project config
         "<rootDir>/projects/tags-input-demo/src/test.ts", // Ignore Karma setup file specifically for demo project
       ],
-      globals: {
-        "ts-jest": {
-          tsconfig: "<rootDir>/projects/tags-input-demo/tsconfig.spec.json", // Use demo-specific tsconfig
-          stringifyContentPathRegex: "\\.html$",
-          diagnostics: false,
-        },
+      transform: {
+        "^.+\\.(ts|js|mjs|html|svg)$": [
+          "jest-preset-angular",
+          {
+            tsconfig: "<rootDir>/projects/tags-input-demo/tsconfig.spec.json", // Use demo-specific tsconfig
+            stringifyContentPathRegex: "\\.html$",
+          },
+        ],
       },
       moduleNameMapper: {
         // Map the library's public API path for demo app tests

@@ -22,19 +22,11 @@
           "options": {
             "tsConfig": "projects/angular-tags-input/tsconfig.lib.json",
             "project": "projects/angular-tags-input/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "projects/angular-tags-input/tsconfig.lib.prod.json"
             }
-          }
-},
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/angular-tags-input/src/test.ts",
-            "tsConfig": "projects/angular-tags-input/tsconfig.spec.json",
-            "karmaConfig": "projects/angular-tags-input/karma.conf.js"
           }
         }
       }
@@ -62,9 +54,7 @@
               "projects/tags-input-demo/src/favicon.ico",
               "projects/tags-input-demo/src/assets"
             ],
-            "styles": [
-              "projects/tags-input-demo/src/styles.scss"
-            ],
+            "styles": ["projects/tags-input-demo/src/styles.scss"],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -132,9 +122,7 @@
               "projects/tags-input-demo/src/favicon.ico",
               "projects/tags-input-demo/src/assets"
             ],
-            "styles": [
-              "projects/tags-input-demo/src/styles.scss"
-            ],
+            "styles": ["projects/tags-input-demo/src/styles.scss"],
             "scripts": []
           }
         },
