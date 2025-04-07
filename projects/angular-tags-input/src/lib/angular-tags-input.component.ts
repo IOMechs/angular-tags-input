@@ -22,6 +22,7 @@ import { AngularTagItem, AngularTagsInputConfig } from './tags-input-interfaces'
 import { UnAddedTagsPipe } from './un-added-tags.pipe';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { KEY_CODES } from './constants';
+import { DropdownItemsFilterPipe } from './dropdown-items-filter.pipe';
 
 @Component({
   selector: 'ti-angular-tags-input',
@@ -76,6 +77,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   isDropdownOpen: boolean;
   dropdownShownYet: boolean;
   unAddedTagsPipe = new UnAddedTagsPipe();
+  dropdownItemsFilter = new DropdownItemsFilterPipe();
   constructor(
     private readonly sso: ScrollStrategyOptions,
     private tagsService: AngularTagsInputService
@@ -284,6 +286,26 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     }
     if (!this.tags.find(tagItem => tagItem[this.config.identifier] === tag[this.config.identifier])) {
       this.tags = [...this.tags, tag];
+
+      // Resets the input value if there are no dropdown items to show, After a tag has been added
+      if(!this.config.hideDDOnBlur && !this.config.hideDDOnTagSelect) {
+        const remainingTags = this.unAddedTagsPipe.transform(this.tagsData, {
+          tagsAdded: this.tags,
+          config: this.config,
+        });
+        const dropdownContext =
+          remainingTags.length &&
+          this.dropdownItemsFilter.transform(
+            remainingTags,
+            this.config,
+            this.inputVal
+          );
+        if (!dropdownContext.length) {
+          this.onInputValueChanged("");
+          this.tagInput.focus();
+        }
+      }
+
       this.onChange(
         this.tags
       );
