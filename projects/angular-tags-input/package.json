@@ -1,6 +1,6 @@
 {
   "name": "@iomechs/angular-tags-input",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "peerDependencies": {
     "@angular/common": "^8.2.11",
     "@angular/core": "^8.2.11"

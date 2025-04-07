@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
     "build": "ng build",
     "build:lib": "ng build angular-tags-input",
     "test": "ng test",
@@ -11,7 +11,7 @@
     "copy:readme": "cp ./README.md ./projects/angular-tags-input/",
     "copy:license": "cp ./LICENSE ./projects/angular-tags-input/",
     "release": "npm run copy:readme && npm run build:lib && cd ./dist/angular-tags-input && npm publish --access public",
-    "e2e": "set NODE_OPTIONS=--openssl-legacy-provider && ng e2e"
+    "e2e": "npx playwright test"
   },
   "private": true,
   "dependencies": {
@@ -34,19 +34,16 @@
     "@angular/cli": "~8.3.19",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
-    "@types/jasmine": "~3.3.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@playwright/test": "^1.44.1",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "3.5",
-    "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^5.4.0",
-    "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
