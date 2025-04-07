@@ -62,7 +62,6 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     nestedTagProperty: '',
     showTagsSelectedInDD: false,
     hideTags: false,
-    enableTabNavigation: true,
     maxItems: null,
     nestedTagParentProp: '',
     keyboardActiveClass: 'angular-tags-dropdown__list__item--active',

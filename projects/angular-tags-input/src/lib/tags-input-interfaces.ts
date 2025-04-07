@@ -24,7 +24,6 @@ export interface AngularTagsInputConfig {
   showParentTagsOnly?: boolean;
   hideDDOnBlur?: boolean;
   hideDDOnTagSelect?: boolean
-  enableTabNavigation?: boolean;
 }
 
 export interface AngularTagsInputDDFns {

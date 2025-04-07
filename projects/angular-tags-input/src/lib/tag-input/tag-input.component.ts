@@ -84,12 +84,9 @@ export class TagInputComponent implements OnInit, OnChanges {
     /**
    *  @author Annas baig
    * @desc focus the input field
-   *
    */
     focus() {
-      if (this.inputEl) {
-        this.inputEl.nativeElement.focus();
-      }
+      this.inputEl.nativeElement.focus();
     }
 
   /**

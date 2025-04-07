@@ -7,7 +7,6 @@
       [placeholder]="config?.placeholder"
       formControlName="tagInputVal"
       (click)="emitInputFocused()"
-      [tabIndex]="config?.enableTabNavigation ? 0 : -1"
       (focus)="emitInputFocused()"
       (blur)="emitInputBlurred($event)"
       class="angular-tag-input__input"
