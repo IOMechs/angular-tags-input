@@ -82,7 +82,7 @@ export class TagInputComponent implements OnInit, OnChanges {
   }
 
     /**
-   *  @author Annas baig
+   * @author Annas baig
    * @desc focus the input field
    */
     focus() {
