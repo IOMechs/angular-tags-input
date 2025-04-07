@@ -20,11 +20,13 @@
     ],
     "paths": {
       "angular-tags-input": [
-        "dist/angular-tags-input"
-      ],
-      "angular-tags-input/*": [
-        "dist/angular-tags-input/*"
+        "projects/angular-tags-input/src/public-api.ts" // Point to source for dev/test
       ]
+      // Keep the wildcard path pointing to dist if needed for specific build scenarios,
+      // or remove if not necessary. For now, let's remove it to avoid potential confusion.
+      // "angular-tags-input/*": [
+      //   "dist/angular-tags-input/*"
+      // ]
     }
   },
   "angularCompilerOptions": {
