@@ -9,14 +9,15 @@ import { OverlayModule } from "@angular/cdk/overlay"; // Import OverlayModule
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
+    imports: [
         RouterTestingModule,
         ReactiveFormsModule,
         AngularTagsInputModule,
         OverlayModule, // Add OverlayModule here
-      ],
-      declarations: [AppComponent, UsersListItemComponent],
-    }).compileComponents();
+    ],
+    declarations: [AppComponent, UsersListItemComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   }));
 
   it("should create the app", () => {

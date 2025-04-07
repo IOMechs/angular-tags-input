@@ -9,9 +9,10 @@ describe('TagInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagInputComponent ],
-      imports: [ReactiveFormsModule]
-    })
+    declarations: [TagInputComponent],
+    imports: [ReactiveFormsModule],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

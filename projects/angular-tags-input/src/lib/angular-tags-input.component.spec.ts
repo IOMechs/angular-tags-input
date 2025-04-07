@@ -12,10 +12,11 @@ describe('AngularTagsInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [OverlayModule, ReactiveFormsModule, FormsModule],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [ AngularTagsInputComponent, UnAddedTagsPipe ]
-    })
+    imports: [OverlayModule, ReactiveFormsModule, FormsModule],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [AngularTagsInputComponent, UnAddedTagsPipe],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

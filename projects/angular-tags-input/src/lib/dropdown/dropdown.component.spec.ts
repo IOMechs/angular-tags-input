@@ -9,9 +9,10 @@ describe("DropdownComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DropdownComponent, KeyboardActiveClassDirective],
-      imports: [OverlayModule],
-    }).compileComponents();
+    declarations: [DropdownComponent, KeyboardActiveClassDirective],
+    imports: [OverlayModule],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   }));
 
   beforeEach(() => {
