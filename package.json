@@ -11,7 +11,7 @@
     "copy:readme": "cp ./README.md ./projects/angular-tags-input/",
     "copy:license": "cp ./LICENSE ./projects/angular-tags-input/",
     "release": "npm run copy:readme && npm run build:lib && cd ./dist/angular-tags-input && npm publish --access public",
-    "e2e": "ng e2e"
+    "e2e": "set NODE_OPTIONS=--openssl-legacy-provider && ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -50,6 +50,6 @@
     "ts-node": "~7.0.0",
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
-    "typescript": "^3.6.4"
+    "typescript": "~3.5.3"
   }
 }
