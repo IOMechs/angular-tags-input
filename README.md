@@ -37,3 +37,9 @@ Then in your HTML, you can use as:
     [config]="tagsInputConfig">
   </ti-angular-tags-input>
 ```
+
+## Compatibility
+
+All released versions of this library (up to tag `0.1.16`) are compatible with Angular `^8.2.11`.
+
+Use `1.x.x` for Angular `^15.x.x`

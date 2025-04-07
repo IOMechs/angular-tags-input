@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
     "build": "ng build",
-    "build:lib": "ng build angular-tags-input",
+    "build:lib": "ng build angular-tags-input --configuration production",
     "test": "jest",
     "lint": "ng lint",
     "copy:readme": "cp ./README.md ./projects/angular-tags-input/",
