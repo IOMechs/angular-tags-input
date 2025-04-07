@@ -10,7 +10,7 @@
       "prefix": "ti",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         },
         "@ngrx/schematics:component": {
           "styleext": "scss"
@@ -23,7 +23,12 @@
             "tsConfig": "projects/angular-tags-input/tsconfig.lib.json",
             "project": "projects/angular-tags-input/ng-package.json"
           }
-        },
+        ,          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-tags-input/tsconfig.lib.prod.json"
+            }
+          }
+},
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -65,7 +70,7 @@
             "main": "projects/tags-input-demo/src/main.ts",
             "polyfills": "projects/tags-input-demo/src/polyfills.ts",
             "tsConfig": "projects/tags-input-demo/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/tags-input-demo/src/favicon.ico",
               "projects/tags-input-demo/src/assets"
@@ -88,7 +93,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,

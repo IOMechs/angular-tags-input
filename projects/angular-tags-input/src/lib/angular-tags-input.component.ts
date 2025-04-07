@@ -35,7 +35,7 @@ import { DropdownItemsFilterPipe } from './dropdown-items-filter.pipe';
   encapsulation: ViewEncapsulation.None
 })
 export class AngularTagsInputComponent implements OnInit, AfterViewInit, ControlValueAccessor, OnChanges, Validator {
-  @ViewChild(DropdownComponent, { static: false }) dropdown: DropdownComponent;
+  @ViewChild(DropdownComponent) dropdown: DropdownComponent;
   @Input() config: AngularTagsInputConfig;
   @Input() tagsData: Array<any> = [];
   @Input() disabled = false;
