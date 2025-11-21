@@ -131,9 +131,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
     if (!val && this.config.hideDDOnBlur) {
-      setTimeout(() => {
-        this.hideDropdown();
-      }, 400);
+      this.hideDropdown()
     }
   }
 
