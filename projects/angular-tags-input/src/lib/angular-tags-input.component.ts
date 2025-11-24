@@ -131,7 +131,10 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
   onFocusChange(val: boolean) {
     this.isInputFocused = val;
     if (!val && this.config.hideDDOnBlur) {
-      this.hideDropdown()
+      //timeout to allow click event to register before hiding dropdown
+      setTimeout(() => { 
+        this.hideDropdown();
+      }, 400)
     }
   }
 
@@ -146,6 +149,12 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
       ...this.config
     };
     this.ddScrollStrategy = this.sso.reposition();
+  }
+
+  hideDropdownOnTab(event: Event){
+    if(event instanceof KeyboardEvent && event.key === 'Tab'){
+      this.hideDropdown();
+    }
   }
 
   /**
@@ -485,7 +494,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
       this.isDropdownOpen = true;
     } else if (
       this.isDropdownOpen &&
-      $event.key === KEY_CODES.ESCAPE
+      ($event.key === KEY_CODES.ESCAPE)
     ) {
       return this.hideDropdown();
     }

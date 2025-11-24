@@ -21,7 +21,8 @@
       (valueChanged)="onInputValueChanged($event)"
       (inputFocused)="onInputFocus()"
       (inputBlurred)="onFocusChange(false);"
-      (inputKeyPress)="inputKeyPress($event)">
+      (inputKeyPress)="inputKeyPress($event)"
+      (keydown)="hideDropdownOnTab($event)">
     </ti-tag-input>
   </div>
   
