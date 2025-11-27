@@ -121,9 +121,9 @@ Example usages of `dropDownTemplate` are as follows:
 ```
 
 > **Note**:
-> Always remember to add `(click)="fns.onItemClicked(item)"`, otherwise neither the item will be added in input field nor any event would be emitted.
+> Always remember to add `(click)="fns.onItemClicked(item)"`, otherwise neither the item will be added in input field nor any event would be emitted on clicking item.
 
-> Don't forget to add `tick.png` in your assets field.
+> Don't forget to add `tick.png` in your assets folder.
 
 #### Nested Dropdown Template
 
