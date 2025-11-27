@@ -45,7 +45,7 @@ These are the available Input properties you can pass to the component.
 | ------ | ----- | -----| --------------- |
 | `tagsData` | `any[]`   | `[]`   | List of items to be added in dropdown. Must be piped with async to pass an array. |
 | `disabled`  | `boolean`  | `false`  | Disables the component interactions.  |
-| `config` | [`AngularTagsInputConfig`](#angulartagsinputconfig) | (described in Interfaces section) | Component configuration (defined in [`AngularTagsInputConfig`](#angulartagsinputconfig) under [Interfaces](#custom-interfaces) section) |
+| `config` | [`AngularTagsInputConfig`](#angulartagsinputconfig) | (described in Interfaces section) | Component configuration (defined in [`AngularTagsInputConfig`](#angulartagsinputconfig) under [Configuration Interface](#configuration-interface)) |
 | [`dropDownTemplate`](#dropdown-template-dropdowntemplate) | `TemplateRef<any>`  | Built-in template | Template used for rendering the dropdown content. |
 | [`tagItemTemplate`](#tag-item-template-tagitemtemplate)| `TemplateRef<any>` | Built-in template | Template used for rendering the tag item in field.|
 
