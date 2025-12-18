@@ -208,3 +208,37 @@ Example usage of `tagItemTemplate` is as follows
 All released versions of this library (up to tag `0.1.16`) are compatible with Angular `^8.2.11`.
 
 Use `1.x.x` for Angular `^15.x.x`
+
+## Development
+
+### Build
+
+Run `npm run build:lib` to build the library. The build artifactsqm will be stored in the `dist/` directory.
+
+### Running unit tests
+
+Run `npm test` to execute the unit tests via [Jest](https://jestjs.io/).
+
+### Release
+
+1.  Bump the version in `package.json` and `projects/angular-tags-input/package.json`.
+2.  Run `npm install` to update `package-lock.json`.
+3.  Commit the changes.
+4.  Tag the release: `git tag -a v1.x.x -m "v1.x.x"`.
+5.  Push changes and tags: `git push origin master --tags`.
+6.  Run `npm run release` to build and publish the library to npm.
+
+## Demo
+
+The demo application is located in `projects/tags-input-demo`.
+
+### Running the demo
+
+Run `npm start` to serve the demo application. Navigate to `http://localhost:4200/`.
+
+### Deploying the demo
+
+The demo is deployed to GitHub Pages using GitHub Actions.
+To deploy manually:
+1.  Run `npm run build` to build the demo application.
+2.  Deploy the contents of `dist/tags-input-demo` to the `gh-pages` branch.
