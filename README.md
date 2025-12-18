@@ -221,10 +221,10 @@ Run `npm test` to execute the unit tests via [Jest](https://jestjs.io/).
 
 ### Release
 
-1.  Bump the version in `package.json` and `projects/angular-tags-input/package.json`.
+1.  Bump the version in `projects/angular-tags-input/package.json`.
 2.  Run `npm install` to update `package-lock.json`.
 3.  Commit the changes.
-4.  Tag the release: `git tag -a v1.x.x -m "v1.x.x"`.
+4.  Tag the release: `git tag -a v1.x.x -m "v1.x.x"` (e.g., `v1.1.0`).
 5.  Push changes and tags: `git push origin master --tags`.
 6.  Run `npm run release` to build and publish the library to npm.
 
