@@ -31,7 +31,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build Demo
-        run: npm run build -- --base-href /angular-tags-input/
+        run: npm run build -- tags-input-demo --base-href /angular-tags-input/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
