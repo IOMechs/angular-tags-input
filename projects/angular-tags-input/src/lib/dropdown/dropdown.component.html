@@ -34,7 +34,15 @@
   [cdkConnectedOverlayOpen]="inputTooltipShown"
   [cdkConnectedOverlayPositions]="inputTooltipPositions"
 >
-  <div class="tooltip-main" *ngIf="tooltipForInput">
-    {{ tooltipForInput }}
+  <div
+    class="tooltip-main"
+    *ngIf="tooltipForInput"
+    (mouseenter)="onTooltipMouseEnter()"
+    (mouseleave)="onTooltipMouseLeave()"
+  >
+    <ng-container *ngIf="config.renderTooltipAsHtml; else plainTooltip">
+      <span [innerHTML]="tooltipForInput"></span>
+    </ng-container>
+    <ng-template #plainTooltip>{{ tooltipForInput }}</ng-template>
   </div>
 </ng-template>

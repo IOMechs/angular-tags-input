@@ -7,56 +7,58 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild
-} from '@angular/core';
-import { ListKeyManager, ListKeyManagerOption } from '@angular/cdk/a11y';
-import { UP_ARROW, DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
+  ViewChild,
+} from "@angular/core";
+import { ListKeyManager, ListKeyManagerOption } from "@angular/cdk/a11y";
+import { UP_ARROW, DOWN_ARROW, ENTER } from "@angular/cdk/keycodes";
 import {
   AngularTagItem,
   AngularTagsInputConfig,
-  AngularTagsInputDDFns
-} from '../tags-input-interfaces';
-import { KEY_CODES } from '../constants';
-import { AngularTagsInputService } from '../angular-tags-input.service';
-import { DropdownItemsFilterPipe } from '../dropdown-items-filter.pipe';
-import { CdkOverlayOrigin } from '@angular/cdk/overlay';
+  AngularTagsInputDDFns,
+} from "../tags-input-interfaces";
+import { KEY_CODES } from "../constants";
+import { AngularTagsInputService } from "../angular-tags-input.service";
+import { DropdownItemsFilterPipe } from "../dropdown-items-filter.pipe";
+import { CdkOverlayOrigin } from "@angular/cdk/overlay";
 
 @Component({
-  selector: 'ti-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss']
+  selector: "ti-dropdown",
+  templateUrl: "./dropdown.component.html",
+  styleUrls: ["./dropdown.component.scss"],
 })
 export class DropdownComponent
-  implements OnInit, AngularTagsInputDDFns, OnChanges {
+  implements OnInit, AngularTagsInputDDFns, OnChanges
+{
   @Input() config: AngularTagsInputConfig;
   @Input() listItems: AngularTagItem[] = [];
-  @Input() inputVal = '';
+  @Input() inputVal = "";
   @Input() dropDownTemplate: TemplateRef<any>;
   @Input() tagsLoading: boolean;
   @Input() keyPress: any;
   @Output() itemAdded = new EventEmitter<AngularTagItem>();
   @Output() itemClicked = new EventEmitter<AngularTagItem>();
-  @ViewChild('defaultTagOptionTemplate', { static: true })
+  @ViewChild("defaultTagOptionTemplate", { static: true })
   defaultTagOptionTemplate: TemplateRef<any>;
 
   dropdownItemsFilter = new DropdownItemsFilterPipe();
   ddIdPrefix: string;
   context: any;
   activeIndex: number;
-  identifierSeparator = '__';
+  identifierSeparator = "__";
   keyboardEventsManager: ListKeyManager<ListKeyManagerOption>;
   itemsMap: Map<string, any> = new Map<string, any>();
   tooltipForInput: string;
   inputTooltipOverlayOrigin: CdkOverlayOrigin;
   tooltipTimeout: number;
+  tooltipHideTimeout: number;
   inputTooltipShown: boolean;
   inputTooltipPositions = [
-    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'bottom' },
-    { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
+    { originX: "start", originY: "bottom", overlayX: "start", overlayY: "top" },
+    { originX: "start", originY: "top", overlayX: "start", overlayY: "bottom" },
+    { originX: "end", originY: "bottom", overlayX: "end", overlayY: "bottom" },
+    { originX: "end", originY: "top", overlayX: "end", overlayY: "bottom" },
   ];
-  constructor(private readonly tagsInputService: AngularTagsInputService) { }
+  constructor(private readonly tagsInputService: AngularTagsInputService) {}
 
   ngOnInit() {
     if (!this.dropDownTemplate) {
@@ -70,15 +72,15 @@ export class DropdownComponent
       fns: {
         onItemClicked: this.onItemClicked.bind(this),
         showTooltip: this.showTooltip.bind(this),
-        hideTooltip: this.hideTooltip.bind(this)
-      }
+        hideTooltip: this.hideTooltip.bind(this),
+      },
     };
     this.keyboardEventsManager = new ListKeyManager([
-      ...(this.listItems as any)
+      ...(this.listItems as any),
     ]);
     this.populateItemsMap(this.listItems);
     this.ddIdPrefix = this.getRandomString();
-    this.tagsInputService.log(this.itemsMap, 'items populated initially');
+    this.tagsInputService.log(this.itemsMap, "items populated initially");
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -86,7 +88,7 @@ export class DropdownComponent
       // if the list items change, update the context items (because they're not automatically updated)
       this.filterItems(this.inputVal, changes.listItems.currentValue);
       this.populateItemsMap(
-        changes.listItems ? changes.listItems.currentValue : this.listItems
+        changes.listItems ? changes.listItems.currentValue : this.listItems,
       );
     }
 
@@ -94,7 +96,7 @@ export class DropdownComponent
       // if the list items change, update the context items (because they're not automatically updated)
       this.filterItems(changes.inputVal.currentValue);
       this.populateItemsMap(
-        changes.listItems ? changes.listItems.currentValue : this.listItems
+        changes.listItems ? changes.listItems.currentValue : this.listItems,
       );
     }
   }
@@ -107,7 +109,7 @@ export class DropdownComponent
 
   filterItems(searchTerm = this.inputVal, items = this.listItems) {
     this.context.items = [
-      ...this.dropdownItemsFilter.transform(items, this.config, searchTerm)
+      ...this.dropdownItemsFilter.transform(items, this.config, searchTerm),
     ];
     this.ddIdPrefix = this.getRandomString();
   }
@@ -121,7 +123,7 @@ export class DropdownComponent
 
   populateItemsMap(items, prefix = null) {
     if (prefix === null) {
-      prefix = '';
+      prefix = "";
     } else {
       prefix += this.identifierSeparator;
     }
@@ -162,9 +164,9 @@ export class DropdownComponent
     if (isKeyDown || isKeyUp) {
       // passing the event to key manager so we get a change fired
       this.setActiveElement(event);
-    } else if (isKeyEnter && (this.keyboardEventsManager.activeItem != null)) {
+    } else if (isKeyEnter && this.keyboardEventsManager.activeItem != null) {
       this.itemClicked.emit(
-        this.keyboardEventsManager.activeItem as AngularTagItem
+        this.keyboardEventsManager.activeItem as AngularTagItem,
       );
     }
   }
@@ -185,7 +187,7 @@ export class DropdownComponent
     const isKeyDown = this.isKeyDown(event);
     const isKeyUp = this.isKeyUp(event);
     const previousActiveItem = {
-      ...this.keyboardEventsManager.activeItem
+      ...this.keyboardEventsManager.activeItem,
     } as AngularTagItem;
     if (isKeyDown) {
       this.setNextActiveElement(previousActiveItem, this.listItems);
@@ -208,22 +210,22 @@ export class DropdownComponent
     keyIdentifier =
       keyIdentifierArr.length > 1
         ? [...keyIdentifierArr]
-          .splice(0, keyIdentifierArr.length - 1)
-          .join(this.identifierSeparator)
+            .splice(0, keyIdentifierArr.length - 1)
+            .join(this.identifierSeparator)
         : keyIdentifierArr[0];
     treeItems = Object.keys(this.itemsMap).filter((key) =>
-      new RegExp(`^${keyIdentifier}${this.identifierSeparator}`).test(key)
+      new RegExp(`^${keyIdentifier}${this.identifierSeparator}`).test(key),
     );
     if (!treeItems.length) {
       treeItems = Object.keys(this.itemsMap).filter((key) =>
-        new RegExp(`^${keyIdentifier}$`).test(key)
+        new RegExp(`^${keyIdentifier}$`).test(key),
       );
     }
     index = treeItems.findIndex((id) => id === identifier);
     if (index === treeItems.length - 1) {
       this.setActiveElementRecursively(
         this.findNextParent(keyIdentifierArr),
-        this.listItems
+        this.listItems,
       );
     } else {
       this.setActiveElementRecursively(treeItems[index + 1], this.listItems);
@@ -242,18 +244,18 @@ export class DropdownComponent
     }
     const nextIdArr = [...keyIdentifierArr].splice(
       0,
-      keyIdentifierArr.length - 1
+      keyIdentifierArr.length - 1,
     );
     nextIdArr[nextIdArr.length - 1] = `${+nextIdArr[nextIdArr.length - 1] + 1}`;
     keyIdentifier = nextIdArr.join(this.identifierSeparator);
     treeItems = Object.keys(this.itemsMap).filter((key) =>
-      new RegExp(`^${keyIdentifier}`).test(key)
+      new RegExp(`^${keyIdentifier}`).test(key),
     );
     if (treeItems.length) {
       return treeItems[0];
     } else {
       return this.findNextParent([
-        ...keyIdentifierArr.splice(0, keyIdentifierArr.length - 1)
+        ...keyIdentifierArr.splice(0, keyIdentifierArr.length - 1),
       ]);
     }
   }
@@ -273,22 +275,22 @@ export class DropdownComponent
     keyIdentifier =
       keyIdentifierArr.length > 1
         ? [...keyIdentifierArr]
-          .splice(0, keyIdentifierArr.length - 1)
-          .join(this.identifierSeparator)
+            .splice(0, keyIdentifierArr.length - 1)
+            .join(this.identifierSeparator)
         : keyIdentifierArr[0];
     treeItems = Object.keys(this.itemsMap).filter((key) =>
-      new RegExp(`^${keyIdentifier}(${this.identifierSeparator})?`).test(key)
+      new RegExp(`^${keyIdentifier}(${this.identifierSeparator})?`).test(key),
     );
     if (!treeItems.length) {
       treeItems = Object.keys(this.itemsMap).filter((key) =>
-        new RegExp(`^${keyIdentifier}$`).test(key)
+        new RegExp(`^${keyIdentifier}$`).test(key),
       );
     }
     index = treeItems.findIndex((id) => id === identifier);
     if (treeItems.length === 1 || index === 0) {
       this.setActiveElementRecursively(
         this.findPrevousParentLastChild(keyIdentifierArr, identifier),
-        this.listItems
+        this.listItems,
       );
     } else {
       this.setActiveElementRecursively(treeItems[index - 1], this.listItems);
@@ -306,11 +308,11 @@ export class DropdownComponent
       : prevIdArr[prevIdArr.length - 1];
     keyIdentifier = prevIdArr.join(this.identifierSeparator);
     let treeItems = Object.keys(this.itemsMap).filter((key) =>
-      new RegExp(`^${keyIdentifier}${this.identifierSeparator}`).test(key)
+      new RegExp(`^${keyIdentifier}${this.identifierSeparator}`).test(key),
     );
     if (treeItems.length === 0) {
       treeItems = Object.keys(this.itemsMap).filter((key) =>
-        new RegExp(`^${keyIdentifier}$`).test(key)
+        new RegExp(`^${keyIdentifier}$`).test(key),
       );
     }
     if (treeItems.length > 0) {
@@ -321,7 +323,7 @@ export class DropdownComponent
     } else if (keyIdentifierArr.length > 1) {
       return this.findPrevousParentLastChild(
         [...keyIdentifierArr.splice(0, keyIdentifierArr.length - 1)],
-        prevItemIdentifier
+        prevItemIdentifier,
       );
     } else {
       keyIdentifier = keyIdentifierArr.join(this.identifierSeparator);
@@ -333,7 +335,7 @@ export class DropdownComponent
     for (let i = 0, len = items.length; i < len; ++i) {
       items[i].tiKeyboardActive = false;
       if (items[i].tiIdentifier === identifier) {
-        this.keyboardEventsManager = new ListKeyManager([...(items)]);
+        this.keyboardEventsManager = new ListKeyManager([...items]);
         items[i].tiKeyboardActive = true; // select next item
         this.keyboardEventsManager.setActiveItem(items[i]);
       }
@@ -343,7 +345,7 @@ export class DropdownComponent
       ) {
         this.setActiveElementRecursively(
           identifier,
-          items[i][this.config.nestedTagProperty]
+          items[i][this.config.nestedTagProperty],
         );
       }
     }
@@ -365,6 +367,22 @@ export class DropdownComponent
       return;
     }
     clearTimeout(this.tooltipTimeout);
-    this.inputTooltipShown = false;
+    if (this.config.renderTooltipAsHtml) {
+      // give the pointer time to travel onto the tooltip to click links inside it
+      this.tooltipHideTimeout = setTimeout(() => {
+        this.inputTooltipShown = false;
+      }, 200) as unknown as number;
+    } else {
+      this.inputTooltipShown = false;
+    }
+  }
+
+  onTooltipMouseEnter() {
+    // pointer entered the tooltip — cancel the pending hide so it stays open
+    clearTimeout(this.tooltipHideTimeout);
+  }
+
+  onTooltipMouseLeave() {
+    this.hideTooltip();
   }
 }
