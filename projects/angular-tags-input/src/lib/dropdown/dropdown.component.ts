@@ -371,7 +371,7 @@ export class DropdownComponent
       // give the pointer time to travel onto the tooltip to click links inside it
       this.tooltipHideTimeout = setTimeout(() => {
         this.inputTooltipShown = false;
-      }, 0) as unknown as number;
+      }, 200) as unknown as number;
     } else {
       this.inputTooltipShown = false;
     }
