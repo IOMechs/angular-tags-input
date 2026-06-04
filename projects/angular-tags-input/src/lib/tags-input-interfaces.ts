@@ -1,6 +1,7 @@
 export interface AngularTagsInputConfig {
   defaultClass?: string;
   showTooltipOnOptions?: boolean;
+  renderTooltipAsHtml?: boolean;
   ddHasBackdrop?: boolean;
   keyboardActiveClass?: string;
   additionalClasses?: string;

@@ -74,6 +74,7 @@ This interface defines all configurable options available for the tags input com
 | `displayProperty`        | `string`  | Key in your `tagsData` whose value will be shown as the label for each dropdown option.                                                                         |
 | `showTooltipOnOptions`   | `boolean` | Shows tooltip on hovering the dropdown options. Should be used together with `hoverProperty`.                                                                   |
 | `hoverProperty`          | `string`  | The value that will be displayed as tooltip.                                                                                                                    |
+| `renderTooltipAsHtml`    | `boolean` | When enabled, the tooltip content (`hoverProperty`) is rendered as HTML instead of plain text, so markup such as links is displayed. Defaults to `false`. See the [security consideration](#security-consideration-rendertooltipashtml) below. |
 | `showTagsSelectedInDD`   | `boolean` | Enable it if you want to show a check mark on selected items.                                                                                                   |
 | `hideAddedTags`          | `boolean` | Enable it if you want to hide those tags that have already been selected in dropdown.                                                                           |
 | `placeholder`            | `string`  | The placeholder value for input field.                                                                                                                          |
@@ -96,6 +97,17 @@ If your data is nested, you may need to use these options as well.
 | `nestedTagProperty`     | `string`  | The key in your `tagsData` that have the list of child items.                                                                                              |
 | `nestedTagParentProp`   | `string`  | Speicifies the identifer of parent.                                                                                                                        |
 | `showParentTagsOnly`    | `boolean` | Enable it if you want to show only parent tag if all of its child tags are selected. Disable it if you want to show parent tags along with its child tags. |
+
+### Security consideration (`renderTooltipAsHtml`)
+
+By default the tooltip content is rendered as plain text, so any HTML in your `hoverProperty` value is escaped and shown literally — this is safe regardless of where the data comes from.
+
+When you enable `renderTooltipAsHtml`, the `hoverProperty` value is rendered as **HTML**. Keep the following in mind:
+
+- **Only enable it for trusted content.** Treat the `hoverProperty` value the same way you would treat any HTML you inject into your page. If it can contain user-generated or otherwise untrusted strings, rendering it as HTML opens the door to cross-site scripting (XSS).
+- **Angular sanitizes the markup.** Internally the tooltip uses Angular's `[innerHTML]` binding, which runs the value through Angular's built-in `DomSanitizer` (`SecurityContext.HTML`). This strips dangerous content such as `<script>` tags and inline event handlers (e.g. `onclick`), while keeping safe elements like `<a href>`, `<b>`, `<i>`, etc. The library does **not** call `bypassSecurityTrustHtml`, so this sanitization is always applied.
+- **Sanitization is a safety net, not a guarantee.** It removes the most common attack vectors, but you should still avoid feeding untrusted HTML into the tooltip. Sanitize/validate the data on your side (ideally server-side) before passing it in.
+- **Links open as written.** If your HTML contains anchors, prefer adding `rel="noopener noreferrer"` (and `target="_blank"` where appropriate) so externally-controlled links cannot abuse `window.opener`.
 
 ## Custom Templates
 

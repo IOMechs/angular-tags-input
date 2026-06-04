@@ -96,6 +96,7 @@ export class AppComponent {
     hideTags: false,
     ddHasBackdrop: true,
     showTooltipOnOptions: true,
+    renderTooltipAsHtml: true,
     hideDDOnTagSelect: true,
   };
 

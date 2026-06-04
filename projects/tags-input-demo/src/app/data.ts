@@ -106,12 +106,12 @@ export const TAGS_DATA_SIMPLE = [
   {
     Id: 259,
     full_name: 'Devil',
-    description: 'Tempore consequatur vitae iusto explicabo adipisci mollitia amet porro incidunt.',
+    description: 'asd <a href="https://dev.icplan.com/#/auth/forgot-password" target="_blank" rel="noopener noreferrer" class="channel-description-link" title="https://dev.icplan.com/#/auth/forgot-password">dev.icplan.com/#/auth/forgot-password</a>',
   },
   {
     Id: 253,
     full_name: 'Dexter\'s Lab',
-    description: 'Tempore consequatur',
+    description: 'Read the docs at <a href="https://github.com/Ahsanayaz/angular-tags-input" target="_blank" rel="noopener noreferrer" class="channel-description-link" title="angular-tags-input on GitHub">github.com/Ahsanayaz/angular-tags-input</a>',
   },
 ];
 

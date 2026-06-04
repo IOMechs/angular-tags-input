@@ -65,6 +65,7 @@ export class AngularTagsInputComponent implements OnInit, AfterViewInit, Control
     maxItems: null,
     nestedTagParentProp: '',
     keyboardActiveClass: 'angular-tags-dropdown__list__item--active',
+    renderTooltipAsHtml: false,
   };
   onChange: (items: AngularTagItem[]) => void;
   dropdownOverlayPosition = [
